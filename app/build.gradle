@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "kasemas.myapplication"
+        applicationId "net.youbuntan.racing"
         minSdkVersion 15
         targetSdkVersion 20
         versionCode 1

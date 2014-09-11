@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import kasemas.myapplication.R;
+import net.youbuntan.racing.R;
 
 
 public class MainActivity extends Activity {
