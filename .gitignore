@@ -1,0 +1,17 @@
+# generated and compiled
+bin/
+gen/
+
+# Gradle Build
+.gradle/
+*/build/
+
+# setting
+.idea/
+local.properties
+.classpath
+.project
+
+#Android Studio
+*.iml
+*.iws
