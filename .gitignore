@@ -5,6 +5,7 @@ gen/
 # Gradle Build
 .gradle/
 */build/
+build/
 
 # setting
 .idea/

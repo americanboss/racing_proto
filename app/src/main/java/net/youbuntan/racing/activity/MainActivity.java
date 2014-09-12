@@ -2,18 +2,36 @@ package net.youbuntan.racing.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import net.youbuntan.racing.R;
 
 
 public class MainActivity extends Activity {
 
+    private LinearLayout mScheduleContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_main);
+
+        mScheduleContainer = (LinearLayout) findViewById(R.id.schedule_container);
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        LinearLayout row = (LinearLayout) inflater.inflate(R.layout.parts_schedule_selecter_row, null);
+        LinearLayout columnA = (LinearLayout) row.findViewById(R.id.schedule_container_column_a);
+        LinearLayout columnB = (LinearLayout) row.findViewById(R.id.schedule_container_column_a);
+        LinearLayout columnC = (LinearLayout) row.findViewById(R.id.schedule_container_column_a);
+
+        mScheduleContainer.addView(row);
+
+
+
     }
 
 

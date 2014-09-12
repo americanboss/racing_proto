@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="schedule_a">#CCFFFF</color>
+    <color name="schedule_b">#FFCCFF</color>
+    <color name="schedule_c">#FFFFCC</color>
+</resources>
