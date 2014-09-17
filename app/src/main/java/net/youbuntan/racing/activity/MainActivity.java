@@ -2,12 +2,22 @@ package net.youbuntan.racing.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import net.youbuntan.racing.R;
+import net.youbuntan.racing.logic.AssetsLogic;
+import net.youbuntan.racing.model.Schedules;
+import net.youbuntan.racing.view.schedule.ScheduleView;
+
+import java.lang.reflect.Type;
 
 
 public class MainActivity extends Activity {
@@ -23,15 +33,39 @@ public class MainActivity extends Activity {
 
         LayoutInflater inflater = LayoutInflater.from(this);
 
-        LinearLayout row = (LinearLayout) inflater.inflate(R.layout.parts_schedule_selecter_row, null);
-        LinearLayout columnA = (LinearLayout) row.findViewById(R.id.schedule_container_column_a);
-        LinearLayout columnB = (LinearLayout) row.findViewById(R.id.schedule_container_column_a);
-        LinearLayout columnC = (LinearLayout) row.findViewById(R.id.schedule_container_column_a);
 
-        mScheduleContainer.addView(row);
+        //開催予定をロードする
+        String scheduleJson = AssetsLogic.getStringAsset(this, "schedule/schedule.test.json");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<Schedules>() { }. getType();
+        Schedules schedules = gson.fromJson(scheduleJson, listType);
 
+        // 日付ごとに処理
+        for (Schedules.ScheduleDate scheduleDate : schedules.getScheduleDates()) {
+            LinearLayout scheduleRow = (LinearLayout) inflater.inflate(R.layout.parts_schedule_selecter_row, null);
+            ScheduleView columnA = (ScheduleView) scheduleRow.findViewById(R.id.schedule_container_column_a);
+            ScheduleView columnB = (ScheduleView) scheduleRow.findViewById(R.id.schedule_container_column_b);
+            ScheduleView columnC = (ScheduleView) scheduleRow.findViewById(R.id.schedule_container_column_c);
 
+            // 開催場の数で見えなくなるカラムの設定
+            if (scheduleDate.getSchedules().size() < 3) {
+                columnC.setVisibility(View.GONE);
+            }
+            if (scheduleDate.getSchedules().size() < 2) {
+                columnB.setVisibility(View.GONE);
+            }
 
+            int count = 0;
+            for (Schedules.Schedule schedule : scheduleDate.getSchedules()) {
+                switch (count) {
+                    case 0 : columnA.setSchedule(schedule); break;
+                    case 1 : columnB.setSchedule(schedule); break;
+                    case 2 : columnC.setSchedule(schedule); break;
+                }
+                count++;
+            }
+            mScheduleContainer.addView(scheduleRow);
+        }
     }
 
 

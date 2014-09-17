@@ -1,1 +1,48 @@
-{}
+{
+    "date_list" : [
+        {
+            "date" : "20140920",
+            "schedules" : [
+                {
+                    "code" : "20140920040404",
+                    "year" : "2014",
+                    "month_day" : "0920",
+                    "course" : "04",
+                    "kaiji" : "04",
+                    "nichiji" : "04"
+                },
+                {
+                    "code" : "20140920050404",
+                    "year" : "2014",
+                    "month_day" : "0920",
+                    "course" : "05",
+                    "kaiji" : "04",
+                    "nichiji" : "04"
+                }
+            ]
+        },
+        {
+            "date" : "20140921",
+            "schedules" : [
+                {
+                    "code" : "20140921040404",
+                    "year" : "2014",
+                    "month_day" : "0921",
+                    "course" : "04",
+                    "kaiji" : "04",
+                    "nichiji" : "04"
+                },
+                {
+                    "code" : "20140921050404",
+                    "year" : "2014",
+                    "month_day" : "0921",
+                    "course" : "05",
+                    "kaiji" : "04",
+                    "nichiji" : "04"
+                }
+            ]
+        }
+
+    ]
+
+}
