@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:id="@+id/tab_scroll"
+                      android:fadingEdgeLength="0dp"
+                      android:scrollbars="none"
+                      android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/tab"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:divider="?android:dividerVertical"
+            android:dividerPadding="5dp"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            />
+        <View
+            android:id="@+id/indicator"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:background="#AA33B5E5"
+        />
+        </FrameLayout>
+
+
+</HorizontalScrollView>

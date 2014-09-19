@@ -1,19 +1,23 @@
 package net.youbuntan.racing.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.youbuntan.racing.R;
+import net.youbuntan.racing.adapter.RaceListAdapter;
 import net.youbuntan.racing.logic.AssetsLogic;
+import net.youbuntan.racing.model.RaceList;
 import net.youbuntan.racing.model.Schedules;
 import net.youbuntan.racing.view.schedule.ScheduleView;
 
@@ -23,6 +27,8 @@ import java.lang.reflect.Type;
 public class MainActivity extends Activity {
 
     private LinearLayout mScheduleContainer;
+    private LinearLayout mPopupView;
+    private ListView mRaceListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mScheduleContainer = (LinearLayout) findViewById(R.id.schedule_container);
+        mPopupView = (LinearLayout) findViewById(R.id.popup_view);
+        mRaceListView = (ListView) findViewById(R.id.popup_race_list);
+        RaceListAdapter adapter = new RaceListAdapter(this);
+
+        mRaceListView.setAdapter(adapter);
+        mRaceListView.setOnItemSelectedListener(mRaceSelectListener);
 
         LayoutInflater inflater = LayoutInflater.from(this);
 
@@ -46,6 +58,10 @@ public class MainActivity extends Activity {
             ScheduleView columnA = (ScheduleView) scheduleRow.findViewById(R.id.schedule_container_column_a);
             ScheduleView columnB = (ScheduleView) scheduleRow.findViewById(R.id.schedule_container_column_b);
             ScheduleView columnC = (ScheduleView) scheduleRow.findViewById(R.id.schedule_container_column_c);
+
+            columnA.setListener(mScheduleListener);
+            columnB.setListener(mScheduleListener);
+            columnC.setListener(mScheduleListener);
 
             // 開催場の数で見えなくなるカラムの設定
             if (scheduleDate.getSchedules().size() < 3) {
@@ -68,6 +84,45 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * 開催予定がクリックされた際のコールバックを受け取り、レース一覧のポップアップを表示する
+     */
+    private ScheduleView.OnScheduleSelectedListener mScheduleListener = new ScheduleView.OnScheduleSelectedListener() {
+        @Override
+        public void onScheduleSelect(final String scheduleCode) {
+            // レース一覧を作成する
+
+            //レース一覧をロードする
+            String raceJson = AssetsLogic.getStringAsset(MainActivity.this, "race/race_list.test.json");
+            Gson gson = new Gson();
+            Type listType = new TypeToken<RaceList>() { }. getType();
+            RaceList raceList = gson.fromJson(raceJson, listType);
+            RaceListAdapter adapter = new RaceListAdapter(MainActivity.this, raceList);
+
+            mPopupView.setVisibility(View.VISIBLE);
+
+            mRaceListView.setAdapter(adapter);
+            mRaceListView.invalidateViews();
+
+        }
+    };
+
+
+    /**
+     * 開催予定内のレースがクリックされた際のコールバックを受け取り、レースビューア画面に遷移する
+     */
+    private AdapterView.OnItemSelectedListener mRaceSelectListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+            Intent intent = new Intent(MainActivity.this, RaceViewerActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onNothingSelected(final AdapterView<?> parent) {
+
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
