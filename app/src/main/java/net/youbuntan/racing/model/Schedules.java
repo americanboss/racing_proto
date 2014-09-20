@@ -46,6 +46,9 @@ public class Schedules {
         @SerializedName("nichiji")
         private String mNichiji;
 
+        @SerializedName("main_race")
+        private String mMainRace;
+
     }
 
 
