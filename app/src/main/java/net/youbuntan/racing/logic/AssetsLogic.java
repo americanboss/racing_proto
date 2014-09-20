@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
+ * Assetを取り扱うクラス
  */
 public class AssetsLogic {
 
