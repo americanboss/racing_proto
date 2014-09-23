@@ -3,6 +3,7 @@ package net.youbuntan.racing.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import net.youbuntan.racing.R;
 import net.youbuntan.racing.adapter.RaceListAdapter;
 import net.youbuntan.racing.logic.AssetsLogic;
+import net.youbuntan.racing.model.Race;
 import net.youbuntan.racing.model.RaceList;
 import net.youbuntan.racing.model.Schedules;
 import net.youbuntan.racing.view.schedule.ScheduleView;
@@ -41,13 +43,14 @@ public class MainActivity extends Activity {
         RaceListAdapter adapter = new RaceListAdapter(this);
 
         mRaceListView.setAdapter(adapter);
-        mRaceListView.setOnItemSelectedListener(mRaceSelectListener);
+
+        mRaceListView.setOnItemClickListener(mRaceClickListener);
 
         LayoutInflater inflater = LayoutInflater.from(this);
 
 
         //開催予定をロードする
-        String scheduleJson = AssetsLogic.getStringAsset(this, "schedule/schedule.test.json");
+        String scheduleJson = AssetsLogic.getStringAsset(this, "schedule/schedule.static.json");
         Gson gson = new Gson();
         Type listType = new TypeToken<Schedules>() { }. getType();
         Schedules schedules = gson.fromJson(scheduleJson, listType);
@@ -93,7 +96,7 @@ public class MainActivity extends Activity {
             // レース一覧を作成する
 
             //レース一覧をロードする
-            String raceJson = AssetsLogic.getStringAsset(MainActivity.this, "race/race_list.test.json");
+            String raceJson = AssetsLogic.getStringAsset(MainActivity.this, "race_list/race_list.static." +scheduleCode+".json");
             Gson gson = new Gson();
             Type listType = new TypeToken<RaceList>() { }. getType();
             RaceList raceList = gson.fromJson(raceJson, listType);
@@ -107,20 +110,32 @@ public class MainActivity extends Activity {
         }
     };
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mPopupView.getVisibility() == View.VISIBLE) {
+                mPopupView.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     /**
      * 開催予定内のレースがクリックされた際のコールバックを受け取り、レースビューア画面に遷移する
      */
-    private AdapterView.OnItemSelectedListener mRaceSelectListener = new AdapterView.OnItemSelectedListener() {
+    private AdapterView.OnItemClickListener mRaceClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+            RaceListAdapter adapter = (RaceListAdapter) mRaceListView.getAdapter();
+            Race race = (Race) adapter.getItem(position);
+
             Intent intent = new Intent(MainActivity.this, RaceViewerActivity.class);
+            intent.putExtra(RaceViewerActivity.KEY_SCHEDULE_CODE, race.getScheduleCode());
+            intent.putExtra(RaceViewerActivity.KEY_RACE_POSITION, position);
+
             startActivity(intent);
-        }
-
-        @Override
-        public void onNothingSelected(final AdapterView<?> parent) {
-
         }
     };
 

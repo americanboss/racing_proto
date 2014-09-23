@@ -24,7 +24,6 @@ public class ScheduleView extends LinearLayout implements View.OnClickListener {
     private OnScheduleSelectedListener mListener;
 
     private LinearLayout mViewContainer;
-    private TextView mYearText;
     private TextView mMonthText;
     private TextView mDayText;
     private TextView mCourseText;
@@ -49,7 +48,6 @@ public class ScheduleView extends LinearLayout implements View.OnClickListener {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.view_schedule, this);
         mViewContainer = (LinearLayout) view.findViewById(R.id.view_container);
-        mYearText = (TextView) view.findViewById(R.id.text_year);
         mMonthText = (TextView) view.findViewById(R.id.text_month);
         mDayText = (TextView) view.findViewById(R.id.text_day);
         mCourseText = (TextView) view.findViewById(R.id.text_course_name);
@@ -62,7 +60,6 @@ public class ScheduleView extends LinearLayout implements View.OnClickListener {
         mSchedule = schedule;
 
         // 日付の作成を行う
-        mYearText.setText(schedule.getYear());
         String[] monthAndDay = StringUtils.convertMonthDayText(schedule.getMonthDay());
         mMonthText.setText(monthAndDay[StringUtils.MONTH_DAY_UTIL_MONTH]);
         mDayText.setText(monthAndDay[StringUtils.MONTH_DAY_UTIL_DAY]);

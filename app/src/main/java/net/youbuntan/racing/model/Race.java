@@ -14,6 +14,8 @@ import lombok.experimental.Accessors;
 @Accessors(prefix = "m") @Getter @Setter
 public class Race {
 
+    public static int KAKUTEI = 1;
+
     @SerializedName("code")
     private String mCode;
 
@@ -33,7 +35,7 @@ public class Race {
     private String mRaceNum;
 
     @SerializedName("weekday")
-    private String mWeekDay;
+    private String mWeekDayCode;
 
     @SerializedName("race_name_full")
     private String mRaceNameFull;
@@ -53,23 +55,17 @@ public class Race {
     @SerializedName("grade")
     private String mGradeCode;
 
-    @SerializedName("race_division")
-    private String mRaceDivisionCode;
-
-    @SerializedName("entry_condition")
-    private String mEntryCondition;
-
     @SerializedName("distance")
     private String mDistance;
 
     @SerializedName("track")
-    private String mTrackCode;
+    private String mTrack;
+
+    @SerializedName("track_master")
+    private String mTrackMaster;
 
     @SerializedName("track_course")
     private String mTrackCourse;
-
-    @SerializedName("start_time")
-    private String mStartTime;
 
     @SerializedName("entry_num")
     private String mEntryNum;
@@ -82,5 +78,14 @@ public class Race {
 
     @SerializedName("track_condition_dirt")
     private String mTrackConditionDirt;
+
+    @SerializedName("race_division")
+    private String mRaceDivision;
+
+    @SerializedName("start_time")
+    private String mStartTime;
+
+    @SerializedName("kakutei")
+    private int mKakutei;
 
 }
