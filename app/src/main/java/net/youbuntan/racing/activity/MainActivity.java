@@ -3,6 +3,7 @@ package net.youbuntan.racing.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -130,6 +131,9 @@ public class MainActivity extends Activity {
 
             RaceListAdapter adapter = (RaceListAdapter) mRaceListView.getAdapter();
             Race race = (Race) adapter.getItem(position);
+
+            Log.v("getScheduleCode", "getScheduleCode : " + race.getScheduleCode());
+            Log.v("position", "position : " + position);
 
             Intent intent = new Intent(MainActivity.this, RaceViewerActivity.class);
             intent.putExtra(RaceViewerActivity.KEY_SCHEDULE_CODE, race.getScheduleCode());

@@ -52,7 +52,7 @@ public class RaceViewerActivity extends FragmentActivity {
         mIndicator = findViewById(R.id.indicator);
 
         //レース一覧をロードする
-        String raceJson = AssetsLogic.getStringAsset(RaceViewerActivity.this, "race_list/race_list.test.json");
+        String raceJson = AssetsLogic.getStringAsset(RaceViewerActivity.this, "race_list/race_list.static."+mScheduleCode+".json");
         Gson gson = new Gson();
         Type listType = new TypeToken<RaceList>() { }. getType();
         RaceList raceList = gson.fromJson(raceJson, listType);

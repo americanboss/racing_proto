@@ -2,6 +2,7 @@ package net.youbuntan.racing.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import lombok.Getter;
@@ -12,9 +13,15 @@ import lombok.experimental.Accessors;
  *
  */
 @Accessors(prefix = "m") @Getter @Setter
-public class Race {
+public class Race implements Serializable {
 
     public static int KAKUTEI = 1;
+
+    // レース名の長さを指定するキー
+    public static final int RACE_NAME_FULL = 0;
+    public static final int RACE_NAME_10 = 10;
+    public static final int RACE_NAME_6 = 6;
+    public static final int RACE_NAME_3 = 3;
 
     @SerializedName("code")
     private String mCode;
@@ -87,5 +94,33 @@ public class Race {
 
     @SerializedName("kakutei")
     private int mKakutei;
+
+
+    /**
+     * レース名を取得する
+     * @param flag
+     * @return
+     */
+    public String getRaceName(int flag) {
+        String raceName = "";
+        switch (flag) {
+            case RACE_NAME_FULL:
+                raceName = mRaceNameFull;
+                break;
+            case RACE_NAME_10:
+                raceName = mRaceName10;
+                break;
+            case RACE_NAME_6:
+                raceName = mRaceName6;
+                break;
+            case RACE_NAME_3:
+                raceName = mRaceName3;
+                break;
+        }
+        if (raceName == null || "".equals(raceName)) {
+            raceName = mRaceDivision;
+        }
+        return raceName;
+    }
 
 }

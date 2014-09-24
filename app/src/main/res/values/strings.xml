@@ -11,5 +11,6 @@
     <string name="label_r">R</string>
     <string name="label_m">m</string>
     <string name="label_to">頭</string>
+    <string name="label_start">発走</string>
 
 </resources>
