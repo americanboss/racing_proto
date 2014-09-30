@@ -12,7 +12,7 @@ import net.youbuntan.racing.model.RaceData;
 import net.youbuntan.racing.model.RaceMember;
 
 /**
- *
+ * 出馬表のListAdapter
  */
 public class RaceMemberListAdapter extends BaseAdapter{
 
@@ -64,6 +64,8 @@ public class RaceMemberListAdapter extends BaseAdapter{
             viewHolder.mJockeyMark = (TextView) view.findViewById(R.id.text_jockey_mark);
             viewHolder.mTrainerName = (TextView) view.findViewById(R.id.text_trainer_name);
             viewHolder.mHorseColor = (TextView) view.findViewById(R.id.text_horse_color);
+            viewHolder.mHorseWeight = (TextView) view.findViewById(R.id.text_horse_weight);
+            viewHolder.mHorseWeightDiff = (TextView) view.findViewById(R.id.text_horse_weight_diff);
 
             view.setTag(viewHolder);
         } else {
@@ -83,6 +85,7 @@ public class RaceMemberListAdapter extends BaseAdapter{
         viewHolder.mJockeyMark.setText(member.getJockeyMark());
         viewHolder.mTrainerName.setText(member.getTrainerName());
         viewHolder.mHorseColor.setText(member.getHorseColorCode());
+        viewHolder.mHorseWeight.setText(member.getHorseWeight());
 
 
         return view;
@@ -91,17 +94,19 @@ public class RaceMemberListAdapter extends BaseAdapter{
 
     class ViewHolder {
 
-        private TextView mGateNumber;
-        private TextView mHorseName;
-        private TextView mFatherName;
-        private TextView mMotherName;
-        private TextView mMothersFatherName;
-        private TextView mGender;
-        private TextView mAge;
-        private TextView mJockeyName;
-        private TextView mJockeyMark;
-        private TextView mTrainerName;
-        private TextView mHorseColor;
+        private TextView mGateNumber;           // 馬番
+        private TextView mHorseName;            // 馬名
+        private TextView mFatherName;           // 父馬名
+        private TextView mMotherName;           // 母馬名
+        private TextView mMothersFatherName;    // 母父馬名
+        private TextView mGender;               // 性別
+        private TextView mAge;                  // 馬齢
+        private TextView mJockeyName;           // 騎手名
+        private TextView mJockeyMark;           // 見習い騎手記号
+        private TextView mTrainerName;          // 調教師名
+        private TextView mHorseColor;           // 毛色コード
+        private TextView mHorseWeight;          // 馬体重
+        private TextView mHorseWeightDiff;      // 馬体重増減
 
 
     }

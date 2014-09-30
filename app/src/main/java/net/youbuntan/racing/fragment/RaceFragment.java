@@ -13,14 +13,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.youbuntan.racing.R;
-import net.youbuntan.racing.adapter.RaceListAdapter;
 import net.youbuntan.racing.adapter.RaceMemberListAdapter;
+import net.youbuntan.racing.adapter.RaceResultListAdapter;
 import net.youbuntan.racing.logic.AssetsLogic;
 import net.youbuntan.racing.model.Race;
 import net.youbuntan.racing.model.RaceData;
-import net.youbuntan.racing.model.RaceList;
+import net.youbuntan.racing.util.comparator.RaceMemberComparator;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 
 /**
  *
@@ -33,6 +34,7 @@ public class RaceFragment extends Fragment {
 
     private Race mRace;
     private ListView mMemberList;
+    private ListView mResultList;
 
     public static RaceFragment load(Race race) {
         RaceFragment fragment = new RaceFragment();
@@ -59,6 +61,10 @@ public class RaceFragment extends Fragment {
         Gson gson = new Gson();
         Type listType = new TypeToken<RaceData>() { }. getType();
         RaceData raceData = gson.fromJson(raceJson, listType);
+        RaceData resultData = gson.fromJson(raceJson, listType);
+
+        Collections.sort(raceData.getRaceMembers(), new RaceMemberComparator(RaceMemberComparator.GATE_NUMBER));
+        Collections.sort(resultData.getRaceMembers(), new RaceMemberComparator(RaceMemberComparator.RESULT));
 
         TextView tvRaceNum = (TextView) view.findViewById(R.id.text_race_num);
         TextView tvStartTime = (TextView) view.findViewById(R.id.text_start_time);
@@ -75,11 +81,33 @@ public class RaceFragment extends Fragment {
         tvEntryNum.setText(mRace.getEntryNum());
 
         mMemberList = (ListView) view.findViewById(R.id.list_race_member);
+        mResultList = (ListView) view.findViewById(R.id.list_race_result);
 
         RaceMemberListAdapter adapter = new RaceMemberListAdapter(getActivity(), raceData);
+        RaceResultListAdapter resultListAdapter = new RaceResultListAdapter(getActivity(), resultData);
 
         mMemberList.setAdapter(adapter);
+        mResultList.setAdapter(resultListAdapter);
 
+        // 表示スイッチ
+        TextView switcherMemberList = (TextView) view.findViewById(R.id.switcher_member_list);
+        TextView switcherResultList = (TextView) view.findViewById(R.id.switcher_result_list);
+
+        switcherMemberList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                mMemberList.setVisibility(View.VISIBLE);
+                mResultList.setVisibility(View.GONE);
+            }
+        });
+
+        switcherResultList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                mMemberList.setVisibility(View.GONE);
+                mResultList.setVisibility(View.VISIBLE);
+            }
+        });
 
 
         return view;
