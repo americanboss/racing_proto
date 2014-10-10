@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import net.youbuntan.racing.Manager.BracketColorManager;
 import net.youbuntan.racing.R;
 import net.youbuntan.racing.model.RaceData;
 import net.youbuntan.racing.model.RaceMember;
@@ -18,15 +20,18 @@ public class RaceMemberListAdapter extends BaseAdapter{
 
     private RaceData mRaceData;
     private LayoutInflater mInflater;
+    private Context mContext;
 
     public RaceMemberListAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRaceData = new RaceData();
+        mContext = context;
     }
 
     public RaceMemberListAdapter(Context context, RaceData raceData) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRaceData = raceData;
+        mContext = context;
     }
 
     @Override
@@ -53,6 +58,8 @@ public class RaceMemberListAdapter extends BaseAdapter{
             view = mInflater.inflate(R.layout.list_race_member, null);
 
             viewHolder = new ViewHolder();
+            viewHolder.mContainerBracketNumber = (LinearLayout) view.findViewById(R.id.container_bracket_number);
+            viewHolder.mBracketNumber = (TextView) view.findViewById(R.id.text_bracket_number);
             viewHolder.mGateNumber = (TextView) view.findViewById(R.id.text_gate_number);
             viewHolder.mHorseName = (TextView) view.findViewById(R.id.text_horse_name);
             viewHolder.mFatherName = (TextView) view.findViewById(R.id.text_father_name);
@@ -74,11 +81,12 @@ public class RaceMemberListAdapter extends BaseAdapter{
 
         RaceMember member = mRaceData.getRaceMembers().get(position);
 
+        viewHolder.mBracketNumber.setText("(" + member.getBracketNumber() + ")");
         viewHolder.mGateNumber.setText(Integer.toString(member.getGateNumber()));
         viewHolder.mHorseName.setText(member.getHorseName());
         viewHolder.mFatherName.setText(member.getFatherName());
         viewHolder.mMotherName.setText(member.getMotherName());
-        viewHolder.mMothersFatherName.setText(member.getMothersFatherName());
+        viewHolder.mMothersFatherName.setText("(" + member.getMothersFatherName() + ")");
         viewHolder.mGender.setText(member.getGender());
         viewHolder.mAge.setText(Integer.toString(member.getAge()));
         viewHolder.mJockeyName.setText(member.getJockeyName());
@@ -87,6 +95,12 @@ public class RaceMemberListAdapter extends BaseAdapter{
         viewHolder.mHorseColor.setText(member.getHorseColorCode());
         viewHolder.mHorseWeight.setText(member.getHorseWeight());
 
+        // 枠番の色設定
+        BracketColorManager budgetColorManager = new BracketColorManager();
+        budgetColorManager.setBracketNumber(member.getBracketNumber());
+        viewHolder.mContainerBracketNumber.setBackgroundColor(budgetColorManager.getBackgroundColorResourceId(mContext));
+        viewHolder.mGateNumber.setTextColor(budgetColorManager.getTextColorResourceId(mContext));
+        viewHolder.mBracketNumber.setTextColor(budgetColorManager.getTextColorResourceId(mContext));
 
         return view;
     }
@@ -94,6 +108,9 @@ public class RaceMemberListAdapter extends BaseAdapter{
 
     class ViewHolder {
 
+        private LinearLayout mContainerBracketNumber; // 枠番のコンテナ
+
+        private TextView mBracketNumber;        // 枠番
         private TextView mGateNumber;           // 馬番
         private TextView mHorseName;            // 馬名
         private TextView mFatherName;           // 父馬名

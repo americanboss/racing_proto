@@ -102,12 +102,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/list_race_member"
+                android:scrollbars="none"
                 />
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/list_race_result"
                 android:visibility="gone"
+                android:scrollbars="none"
                 />
             </LinearLayout>
         <LinearLayout

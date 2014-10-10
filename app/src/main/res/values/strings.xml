@@ -13,4 +13,8 @@
     <string name="label_to">頭</string>
     <string name="label_start">発走</string>
 
+    <string name="label_father">父</string>
+    <string name="label_mother">母</string>
+    <string name="label_mothers_father">母父</string>
+
 </resources>

@@ -3,9 +3,11 @@ package net.youbuntan.racing.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import net.youbuntan.racing.R;
 import net.youbuntan.racing.adapter.RaceMemberListAdapter;
 import net.youbuntan.racing.adapter.RaceResultListAdapter;
+import net.youbuntan.racing.fragment.dialog.RaceMemberControlDialog;
 import net.youbuntan.racing.logic.AssetsLogic;
 import net.youbuntan.racing.model.Race;
 import net.youbuntan.racing.model.RaceData;
@@ -109,7 +112,21 @@ public class RaceFragment extends Fragment {
             }
         });
 
+        mMemberList.setOnItemLongClickListener(mMemberLongClickListener);
 
         return view;
     }
+
+    private AdapterView.OnItemLongClickListener mMemberLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            RaceMemberControlDialog dialog = new RaceMemberControlDialog();
+            dialog.show(fragmentManager, "tag");
+
+            return false;
+        }
+    };
+
 }

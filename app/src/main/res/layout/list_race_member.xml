@@ -4,12 +4,27 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/text_gate_number"
+    <LinearLayout
+        android:id="@+id/container_bracket_number"
         android:layout_width="18dp"
         android:layout_height="match_parent"
-        android:hint="18"
-        />
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/text_bracket_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="(1)"
+            />
+        <TextView
+            android:id="@+id/text_gate_number"
+            android:layout_width="18dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="18"
+            />
+        </LinearLayout>
     <!-- 馬名・血統など -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,28 +33,67 @@
         android:orientation="vertical"
         >
         <TextView
-            android:id="@+id/text_father_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="ディープインパクト"
-            />
-        <TextView
             android:id="@+id/text_horse_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="アヴニールマルシェ"
+            android:textColor="@color/base_text"
+            android:textSize="@dimen/font_size_large"
             />
-        <TextView
-            android:id="@+id/text_mother_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ヴィートマルシェ"
-            />
+            android:orientation="horizontal"
+            android:layout_marginLeft="8dp"
+            >
+            <TextView
+                android:id="@+id/text_father_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_small"
+                android:text="@string/label_father"
+                android:textColor="@color/base_text"
+                android:layout_marginRight="8dp"
+                />
+            <TextView
+                android:id="@+id/text_father_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ディープインパクト"
+                android:textSize="@dimen/font_size_small"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="8dp"
+            >
+            <TextView
+                android:id="@+id/text_mother_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_small"
+                android:text="@string/label_mother"
+                android:textColor="@color/base_text"
+                android:layout_marginRight="8dp"
+                />
+            <TextView
+                android:id="@+id/text_mother_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ヴィートマルシェ"
+                android:textSize="@dimen/font_size_small"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/text_mothers_father_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="フレンチデピュティ"
+            android:textColor="@color/base_text"
+            android:textSize="@dimen/font_size_small"
+            android:layout_marginLeft="35dp"
             />
         </LinearLayout>
 

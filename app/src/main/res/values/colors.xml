@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="base_text">#111111</color>
+
     <color name="schedule_a">#CCFFFF</color>
     <color name="schedule_b">#FFCCFF</color>
     <color name="schedule_c">#FFFFCC</color>
+
+    <color name="bracket_text_black">#000000</color>
+    <color name="bracket_text_white">#FFFFFF</color>
+    <color name="bracket_1">#FFFFFF</color>
+    <color name="bracket_2">#000000</color>
+    <color name="bracket_3">#FF6666</color>
+    <color name="bracket_4">#6666FF</color>
+    <color name="bracket_5">#FFFF33</color>
+    <color name="bracket_6">#66FF66</color>
+    <color name="bracket_7">#FF9933</color>
+    <color name="bracket_8">#FF33FF</color>
+
 </resources>
