@@ -14,14 +14,24 @@ import net.youbuntan.racing.R;
  */
 public class RaceMemberControlDialog extends DialogFragment {
 
+    public static final String KEY_TITLE = "KEY_TITLE";
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
-
         LayoutInflater inflater = LayoutInflater.from(getActivity().getApplicationContext());
-        View view = inflater.inflate(R.layout.list_race_member, null);
+        View view = inflater.inflate(R.layout.dialog_race_member, null);
 
-        Dialog dialog = new Dialog(getActivity());
+        Bundle args = getArguments();
+
+        Dialog dialog  = new Dialog(getActivity());
+        dialog.setTitle(args.getString(KEY_TITLE));
+
         dialog.setContentView(view);
 
         return dialog;

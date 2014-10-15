@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import net.youbuntan.racing.fragment.dialog.RaceMemberControlDialog;
 import net.youbuntan.racing.logic.AssetsLogic;
 import net.youbuntan.racing.model.Race;
 import net.youbuntan.racing.model.RaceData;
+import net.youbuntan.racing.model.RaceMember;
 import net.youbuntan.racing.util.comparator.RaceMemberComparator;
 
 import java.lang.reflect.Type;
@@ -38,6 +40,9 @@ public class RaceFragment extends Fragment {
     private Race mRace;
     private ListView mMemberList;
     private ListView mResultList;
+
+    private RaceMemberListAdapter mMemberListAdapter;
+    private RaceResultListAdapter mResultListAdapter;
 
     public static RaceFragment load(Race race) {
         RaceFragment fragment = new RaceFragment();
@@ -86,11 +91,11 @@ public class RaceFragment extends Fragment {
         mMemberList = (ListView) view.findViewById(R.id.list_race_member);
         mResultList = (ListView) view.findViewById(R.id.list_race_result);
 
-        RaceMemberListAdapter adapter = new RaceMemberListAdapter(getActivity(), raceData);
-        RaceResultListAdapter resultListAdapter = new RaceResultListAdapter(getActivity(), resultData);
+        mMemberListAdapter = new RaceMemberListAdapter(getActivity(), raceData);
+        mResultListAdapter = new RaceResultListAdapter(getActivity(), resultData);
 
-        mMemberList.setAdapter(adapter);
-        mResultList.setAdapter(resultListAdapter);
+        mMemberList.setAdapter(mMemberListAdapter);
+        mResultList.setAdapter(mResultListAdapter);
 
         // 表示スイッチ
         TextView switcherMemberList = (TextView) view.findViewById(R.id.switcher_member_list);
@@ -122,7 +127,10 @@ public class RaceFragment extends Fragment {
         public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
+            Bundle args = new Bundle();
+            args.putString(RaceMemberControlDialog.KEY_TITLE, ((RaceMember) mMemberListAdapter.getItem(position)).getHorseName());
             RaceMemberControlDialog dialog = new RaceMemberControlDialog();
+            dialog.setArguments(args);
             dialog.show(fragmentManager, "tag");
 
             return false;
