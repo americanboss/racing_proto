@@ -18,7 +18,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             />
-        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="画像ビューアー"
+                android:background="@android:color/holo_orange_light"
+                android:padding="10dp"
+                android:id="@+id/image_viewer"
+                />
+            </LinearLayout>
+    </LinearLayout>
     <!-- レース一覧のポップアップ -->
     <LinearLayout
         android:id="@+id/popup_view"

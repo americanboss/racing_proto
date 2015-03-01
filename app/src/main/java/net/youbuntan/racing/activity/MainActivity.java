@@ -49,6 +49,15 @@ public class MainActivity extends Activity {
 
         LayoutInflater inflater = LayoutInflater.from(this);
 
+        // テスト用の画像ビューアを使用する
+        findViewById(R.id.image_viewer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ImageViewerActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         //開催予定をロードする
         String scheduleJson = AssetsLogic.getStringAsset(this, "schedule/schedule.static.json");
