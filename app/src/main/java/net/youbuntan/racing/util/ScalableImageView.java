@@ -9,8 +9,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import net.youbuntan.racing.R;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,6 +19,9 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     private Bitmap mBitmap;
 
     private Controller mController;
+
+    private int mCount;
+    private static final int COUNT_DOWN = 60;
 
     private static final String TAG = "ScaleImageView";
 
@@ -92,6 +93,13 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         mImageHeight = mBitmap.getHeight();
     }
 
+    private float getCenterPointX() {
+        return mX - (mScreenWidth / (2 * mScale ) );
+    }
+    private float getCenterPointY() {
+        return mY - (mScreenHeight / (2 * mScale ) );
+    }
+
     private float getXByCenter(final float centerX) {
         return centerX + (mScreenWidth / (2 * mScale));
     }
@@ -101,18 +109,26 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
 
     @Override
     public boolean onTouch(final View v, final MotionEvent event) {
+        // シングルタッチの場合
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mController.lastX = event.getX();
-            mController.lastY = event.getY();
+            mController.lastX0 = event.getX();
+            mController.lastY0 = event.getY();
             mController.touched = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (mController.touched) {
-                moved(event.getX(), event.getY());
-                mController.touched = false;
-            }
+            mController.reset();
         } else {
             if (mController.touched) {
-                moved(event.getX(), event.getY());
+                if (event.getPointerCount() == 1) {
+                    if (mController.lastDistance != -1) {
+                        mController.lastDistance = -1;
+                        mController.lastX0 = event.getX();
+                        mController.lastY0 = event.getY();
+                    } else {
+                        moved(event.getX(), event.getY());
+                    }
+                } else if (event.getPointerCount() == 2) {
+                    scaled(event.getX(0), event.getY(0), event.getX(1), event.getY(1));
+                }
             }
         }
         mGestureDetector.onTouchEvent(event);
@@ -120,10 +136,10 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     }
 
     private void moved(final float distX, final float distY) {
-        float moveX = (distX - mController.lastX) / mScale;
-        float moveY = (distY - mController.lastY) / mScale;
-        mController.lastX = distX;
-        mController.lastY = distY;
+        float moveX = (distX - mController.lastX0) / mScale;
+        float moveY = (distY - mController.lastY0) / mScale;
+        mController.lastX0 = distX;
+        mController.lastY0 = distY;
 
         mX += moveX;
         mY += moveY;
@@ -133,12 +149,34 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         invalidate();
     }
 
+    private void scaled(final float x0, final float y0, final float x1, final float y1) {
+        // 直線距離を算出する
+        double distance = Math.sqrt(Math.pow(Math.abs(x0 - x1), 2) + Math.pow(Math.abs(y0 - y1), 2));
+        if (mController.lastDistance != -1) {
+            float centerX = getCenterPointX();
+            float centerY = getCenterPointY();
+            mScale = mScale * (float) (distance / mController.lastDistance);
+            mX = getXByCenter(centerX);
+            mY = getYByCenter(centerY);
+        } else {
+            mController.lastScale = mScale;
+        }
+        mController.lastDistance = distance;
+
+
+        setValidParam();
+
+        invalidate();
+
+
+    }
+
     private float getNextScale() {
         float scale = mScale;
         if (scale == mBaseScale * mMaxScale) {
             scale = mBaseScale;
         } else if (scale + mBaseScale > mBaseScale * mMaxScale) {
-            scale = mMaxScale;
+            scale = mBaseScale * mMaxScale;
         } else {
             scale = scale + mBaseScale;
         }
@@ -221,6 +259,13 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     }
 
     private void setValidParam() {
+        // スケール
+        if (mScale > mMaxScale) {
+            mScale = mMaxScale;
+        } else if (mScale < mBaseScale) {
+            mScale = mBaseScale;
+        }
+
         // 横位置
         if (mImageWidth * mScale < mScreenWidth) {
             mX = getXByCenter(-(mImageWidth / 2));
@@ -238,12 +283,9 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         } else if (mY - (mScreenHeight / mScale) < 0 - mImageHeight) {
             mY = ( - mImageHeight + (mScreenHeight / mScale));
         }
-
     }
 
 
-    private int mCount;
-    private static final int COUNT_DOWN = 60;
 
     class AnimationTimer extends TimerTask {
         private float startX;
@@ -318,14 +360,23 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     };
 
     class Controller {
-        private float lastX;
-        private float lastY;
+        private float lastX0;
+        private float lastY0;
+        private double lastDistance;
+        private float lastScale;
         private boolean touched;
+        private boolean multi;
 
         Controller() {
-            lastX = 0;
-            lastY = 0;
+            reset();
+        }
+
+        public void reset() {
+            lastX0 = 0;
+            lastY0 = 0;
+            lastDistance = -1;
             touched = false;
+            multi = false;
         }
     }
 }
