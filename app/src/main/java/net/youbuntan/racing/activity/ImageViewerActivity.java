@@ -22,14 +22,21 @@ public class ImageViewerActivity extends FragmentActivity {
 
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.viewer);
 
+        int[] drawableB = {R.drawable.sample_b0, R.drawable.sample_b1, R.drawable.sample_b2, R.drawable.sample_b3};
+        int[] drawableC = {R.drawable.sample_c0, R.drawable.sample_c1, R.drawable.sample_c2, R.drawable.sample_c3, R.drawable.sample_c4,
+                R.drawable.sample_c5, R.drawable.sample_c6, R.drawable.sample_c7, R.drawable.sample_c8};
+
         mScaleImageView = new ScalableImageView(this);
-        mScaleImageView.setMaxScale(4);
-        mScaleImageView.setDrawable(R.drawable.sample_1);
+        mScaleImageView.setTiling(true);
+        mScaleImageView.setMaxScale(6);
+        mScaleImageView.setDrawableA(R.drawable.sample_a);
+        mScaleImageView.setDrawableB(drawableB);
+        mScaleImageView.setDrawableC(drawableC);
         frameLayout.addView(mScaleImageView);
 
 
-    }
 
+}
     @Override
     protected void onDestroy() {
         super.onDestroy();

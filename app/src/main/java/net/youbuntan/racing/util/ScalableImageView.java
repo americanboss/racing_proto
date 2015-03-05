@@ -14,9 +14,16 @@ import java.util.TimerTask;
 
 /**
  * すけーらぶるなImageView
+ * 3 * 3 分割の画像をタイリングして表示する
  */
 public class ScalableImageView  extends View implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
-    private Bitmap mBitmap;
+    private Bitmap mBitmapA;
+
+    private Bitmap[] mBitmapB;
+
+    private Bitmap[] mBitmapC;
+
+    private boolean mTiling;
 
     private Controller mController;
 
@@ -40,6 +47,29 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     private GestureDetector mGestureDetector;
 
     private Timer mTimer;
+
+    public ScalableImageView(Context context) {
+        super(context);
+
+        setOnTouchListener(this);
+
+        mController = new Controller();
+
+        mX = 0;
+        mY = 0;
+        mScale = mBaseScale;
+        mMaxScale = 3;
+
+        mGestureDetector = new GestureDetector(context, this);
+
+        mBitmapB = new Bitmap[4];
+        mBitmapC = new Bitmap[9];
+
+        mTiling = false;
+
+        mTimer = new Timer(false);
+    }
+
 
     @Override
     protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
@@ -66,32 +96,43 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         super.onDetachedFromWindow();
     }
 
-    public ScalableImageView(Context context) {
-        super(context);
+    public void setTiling(final boolean tiling) {
+        mTiling = tiling;
+    }
 
-        setOnTouchListener(this);
-
-        mController = new Controller();
-
-        mX = 0;
-        mY = 0;
-        mScale = mBaseScale;
-        mMaxScale = 3;
-
-        mGestureDetector = new GestureDetector(context, this);
-
-        mTimer = new Timer(false);
+    public boolean getTiling() {
+        return mTiling;
     }
 
     public void setMaxScale(final int maxScale) {
         mMaxScale = maxScale;
     }
 
-    public void setDrawable(final int drawable) {
-        mBitmap = BitmapFactory.decodeResource(getResources(), drawable);
-        mImageWidth = mBitmap.getWidth();
-        mImageHeight = mBitmap.getHeight();
+    public void setDrawableA(final int drawable) {
+        mBitmapA = BitmapFactory.decodeResource(getResources(), drawable);
+        if (!mTiling) {
+            mImageWidth = mBitmapA.getWidth();
+            mImageHeight = mBitmapA.getHeight();
+        }
     }
+
+    public void setDrawableB(final int[] drawable) {
+        for (int i = 0; i < 4; i++) {
+            mBitmapB[i] = BitmapFactory.decodeResource(getResources(), drawable[i]);
+        }
+    }
+
+    public void setDrawableC(final int[] drawable) {
+        for (int i = 0; i < 9; i++) {
+            mBitmapC[i] = BitmapFactory.decodeResource(getResources(), drawable[i]);
+        }
+        if (mTiling) {
+            mImageWidth = mBitmapC[0].getWidth() * 3;
+            mImageHeight = mBitmapC[0].getHeight() * 3;
+        }
+    }
+
+
 
     private float getCenterPointX() {
         return mX - (mScreenWidth / (2 * mScale ) );
@@ -158,8 +199,6 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
             mScale = mScale * (float) (distance / mController.lastDistance);
             mX = getXByCenter(centerX);
             mY = getYByCenter(centerY);
-        } else {
-            mController.lastScale = mScale;
         }
         mController.lastDistance = distance;
 
@@ -187,8 +226,44 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.scale(mScale, mScale);
-        canvas.drawBitmap(mBitmap, mX, mY, null);
+        // 可視領域の算出
+
+
+        if (mTiling) {
+            // 分割数の算出
+            if (mScale < mBaseScale + (mBaseScale * mMaxScale / 3)) {
+                canvas.scale(mScale * 3, mScale * 3);
+                canvas.drawBitmap(mBitmapA, mX / 3, mY / 3 , null);
+            } else if (mScale < mBaseScale + (mBaseScale * mMaxScale / 3 * 2)) {
+                float f2 = (float) 1.5;
+                float x2 = mX / f2;
+                float y2 = mY / f2;
+
+                canvas.scale(mScale * f2, mScale * f2);
+                // drawBitmapするのを絞ろうと思ったけれど、見えてない部分はdrawされないので計算せずに全描画チャレンジ
+                canvas.drawBitmap(mBitmapB[0], x2,                     y2, null);
+                canvas.drawBitmap(mBitmapB[1], x2 + (mImageWidth / 3), y2, null);
+                canvas.drawBitmap(mBitmapB[2], x2,                     y2 + (mImageHeight / 3), null);
+                canvas.drawBitmap(mBitmapB[3], x2 + (mImageWidth / 3), y2 + (mImageHeight / 3), null);
+
+            } else {
+                canvas.scale(mScale, mScale);
+                canvas.drawBitmap(mBitmapC[0], mX,                         mY, null);
+                canvas.drawBitmap(mBitmapC[1], mX + (mImageWidth / 3),     mY, null);
+                canvas.drawBitmap(mBitmapC[2], mX + (mImageWidth * 2 / 3), mY, null);
+                canvas.drawBitmap(mBitmapC[3], mX,                         mY + (mImageHeight / 3), null);
+                canvas.drawBitmap(mBitmapC[4], mX + (mImageWidth / 3),     mY + (mImageHeight / 3), null);
+                canvas.drawBitmap(mBitmapC[5], mX + (mImageWidth * 2 / 3), mY + (mImageHeight / 3), null);
+                canvas.drawBitmap(mBitmapC[6], mX,                         mY + (mImageHeight * 2 / 3), null);
+                canvas.drawBitmap(mBitmapC[7], mX + (mImageWidth / 3),     mY + (mImageHeight * 2 / 3), null);
+                canvas.drawBitmap(mBitmapC[8], mX + (mImageWidth * 2 / 3), mY + (mImageHeight * 2 / 3), null);
+            }
+        } else {
+            canvas.scale(mScale, mScale);
+            canvas.drawBitmap(mBitmapA, mX, mY, null);
+        }
+
+
     }
 
     @Override
@@ -260,8 +335,8 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
 
     private void setValidParam() {
         // スケール
-        if (mScale > mMaxScale) {
-            mScale = mMaxScale;
+        if (mScale > mMaxScale * mBaseScale) {
+            mScale = mMaxScale * mBaseScale;
         } else if (mScale < mBaseScale) {
             mScale = mBaseScale;
         }
@@ -363,9 +438,7 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         private float lastX0;
         private float lastY0;
         private double lastDistance;
-        private float lastScale;
         private boolean touched;
-        private boolean multi;
 
         Controller() {
             reset();
@@ -376,7 +449,6 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
             lastY0 = 0;
             lastDistance = -1;
             touched = false;
-            multi = false;
         }
     }
 }
