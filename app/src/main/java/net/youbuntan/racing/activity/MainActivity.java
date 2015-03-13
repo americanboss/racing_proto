@@ -26,6 +26,8 @@ import net.youbuntan.racing.view.schedule.ScheduleView;
 
 import java.lang.reflect.Type;
 
+import jp.co.equine.scalableimage.ScalableImageView;
+
 
 public class MainActivity extends Activity {
 
@@ -57,6 +59,17 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+//        int[] drawableB = {R.drawable.sample_b0, R.drawable.sample_b1, R.drawable.sample_b2, R.drawable.sample_b3};
+//        int[] drawableC = {R.drawable.sample_c0, R.drawable.sample_c1, R.drawable.sample_c2, R.drawable.sample_c3, R.drawable.sample_c4,
+//                R.drawable.sample_c5, R.drawable.sample_c6, R.drawable.sample_c7, R.drawable.sample_c8};
+//
+//        ScalableImageView scalableImageView = new ScalableImageView(this);
+//        scalableImageView.setTiling(true);
+//        scalableImageView.setDrawableA(R.drawable.sample_a);
+//        scalableImageView.setDrawableB(drawableB);
+//        scalableImageView.setDrawableC(drawableC);
+//
+//        ((LinearLayout) findViewById(R.id.temp_image_viewer)).addView(scalableImageView);
 
 
         //開催予定をロードする

@@ -1,10 +1,11 @@
-package net.youbuntan.racing.util;
+package jp.co.equine.scalableimage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Handler;
+import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,11 +47,32 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
 
     private GestureDetector mGestureDetector;
 
+    private OnClickListener mOnClickListener;
+
+    private OnImageTouchListener mOnImageTouchListener;
+
+    private OnDrawListener mOnDrawListener;
+
     private Timer mTimer;
+
+    private boolean mFixScaleMode = false;
 
     public ScalableImageView(Context context) {
         super(context);
+        initialize();
+    }
 
+    public ScalableImageView(final Context context, final AttributeSet attrs) {
+        super(context, attrs);
+        initialize();
+    }
+
+    public ScalableImageView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initialize();
+    }
+
+    private void initialize() {
         setOnTouchListener(this);
 
         mController = new Controller();
@@ -60,7 +82,7 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         mScale = mBaseScale;
         mMaxScale = 3;
 
-        mGestureDetector = new GestureDetector(context, this);
+        mGestureDetector = new GestureDetector(getContext(), this);
 
         mBitmapB = new Bitmap[4];
         mBitmapC = new Bitmap[9];
@@ -69,7 +91,6 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
 
         mTimer = new Timer(false);
     }
-
 
     @Override
     protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
@@ -132,7 +153,13 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         }
     }
 
+    public boolean isBaseScale() {
+        return mScale == mBaseScale;
+    }
 
+    public void setFixScaleMode(final boolean fixScaleMode) {
+        mFixScaleMode = fixScaleMode;
+    }
 
     private float getCenterPointX() {
         return mX - (mScreenWidth / (2 * mScale ) );
@@ -152,35 +179,44 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     public boolean onTouch(final View v, final MotionEvent event) {
         // シングルタッチの場合
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mController.lastX0 = event.getX();
-            mController.lastY0 = event.getY();
+            mController.lastX = event.getX();
+            mController.lastY = event.getY();
             mController.touched = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             mController.reset();
-        } else {
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if (mController.touched) {
                 if (event.getPointerCount() == 1) {
                     if (mController.lastDistance != -1) {
                         mController.lastDistance = -1;
-                        mController.lastX0 = event.getX();
-                        mController.lastY0 = event.getY();
+                        mController.lastX = event.getX();
+                        mController.lastY = event.getY();
                     } else {
                         moved(event.getX(), event.getY());
                     }
                 } else if (event.getPointerCount() == 2) {
-                    scaled(event.getX(0), event.getY(0), event.getX(1), event.getY(1));
+                    if (!mFixScaleMode) {
+                        scaled(event.getX(0), event.getY(0), event.getX(1), event.getY(1));
+                    }
                 }
             }
         }
         mGestureDetector.onTouchEvent(event);
+        if (mOnImageTouchListener != null) {
+            mOnImageTouchListener.onImageTouch(v, event);
+        }
         return true;
     }
 
+    public interface OnImageTouchListener {
+        void onImageTouch(final View v, final MotionEvent event);
+    }
+
     private void moved(final float distX, final float distY) {
-        float moveX = (distX - mController.lastX0) / mScale;
-        float moveY = (distY - mController.lastY0) / mScale;
-        mController.lastX0 = distX;
-        mController.lastY0 = distY;
+        float moveX = (distX - mController.lastX) / mScale;
+        float moveY = (distY - mController.lastY) / mScale;
+        mController.lastX = distX;
+        mController.lastY = distY;
 
         mX += moveX;
         mY += moveY;
@@ -263,7 +299,9 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
             canvas.drawBitmap(mBitmapA, mX, mY, null);
         }
 
-
+        if (mOnDrawListener != null) {
+            mOnDrawListener.onDraw(mScale == mBaseScale);
+        }
     }
 
     @Override
@@ -296,6 +334,9 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
 
     @Override
     public boolean onSingleTapConfirmed(final MotionEvent e) {
+        if (mOnClickListener != null) {
+            mOnClickListener.onClick();
+        }
         return false;
     }
 
@@ -306,14 +347,16 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
 
     @Override
     public boolean onDoubleTapEvent(final MotionEvent e) {
-        if (e.getAction() == MotionEvent.ACTION_UP) {
-            // 移動量を計算
-            if (mScale > getNextScale()) {
-                startResetAnimation();
-            } else {
-                float moveX = ((mScreenWidth / 2) - e.getX()) / mScale;
-                float moveY = ((mScreenHeight / 2) - e.getY()) / mScale;
-                startZoomAnimation(moveX, moveY, getNextScale());
+        if (!mFixScaleMode) {
+            if (e.getAction() == MotionEvent.ACTION_UP) {
+                // 移動量を計算
+                if (mScale > getNextScale()) {
+                    startResetAnimation();
+                } else {
+                    float moveX = ((mScreenWidth / 2) - e.getX()) / mScale;
+                    float moveY = ((mScreenHeight / 2) - e.getY()) / mScale;
+                    startZoomAnimation(moveX, moveY, getNextScale());
+                }
             }
         }
         return false;
@@ -358,6 +401,18 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         } else if (mY - (mScreenHeight / mScale) < 0 - mImageHeight) {
             mY = ( - mImageHeight + (mScreenHeight / mScale));
         }
+    }
+
+    public void setOnClickListener(final OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
+    }
+
+    public void setOnImageTouchListener(final OnImageTouchListener onImageTouchListener) {
+        mOnImageTouchListener = onImageTouchListener;
+    }
+
+    public void setOnDrawListener(final OnDrawListener onDrawListener) {
+        mOnDrawListener = onDrawListener;
     }
 
 
@@ -435,8 +490,8 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
     };
 
     class Controller {
-        private float lastX0;
-        private float lastY0;
+        private float lastX;
+        private float lastY;
         private double lastDistance;
         private boolean touched;
 
@@ -445,10 +500,18 @@ public class ScalableImageView  extends View implements View.OnTouchListener, Ge
         }
 
         public void reset() {
-            lastX0 = 0;
-            lastY0 = 0;
+            lastX = 0;
+            lastY = 0;
             lastDistance = -1;
             touched = false;
         }
+    }
+
+    public interface OnClickListener {
+        void onClick();
+    }
+
+    public interface OnDrawListener {
+        void onDraw(final boolean isBaseScale);
     }
 }
