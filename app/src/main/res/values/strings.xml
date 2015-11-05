@@ -17,4 +17,10 @@
     <string name="label_mother">母</string>
     <string name="label_mothers_father">母父</string>
 
+    <string name="race_viewer_member_list">出馬表</string>
+    <string name="race_viewer_result_list">結果</string>
+
+    <string name="label_result">着</string>
+    <string name="label_result_accident">中止</string>
+
 </resources>

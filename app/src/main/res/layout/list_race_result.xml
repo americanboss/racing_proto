@@ -6,27 +6,30 @@
               android:layout_height="match_parent">
     <TextView
         android:id="@+id/text_result"
-        android:layout_width="18dp"
+        android:layout_width="34dp"
         android:layout_height="match_parent"
-        android:hint="1"
+        android:textSize="@dimen/font_size_normal"
+        android:gravity="right"
         />
     <TextView
         android:id="@+id/text_gate_number"
-        android:layout_width="18dp"
+        android:layout_width="24dp"
         android:layout_height="match_parent"
-        android:hint="18"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_normal"
         />
     <TextView
         android:id="@+id/text_horse_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="アヴニールマルシェ"
         android:layout_weight="1"
+        android:textSize="@dimen/font_size_normal"
+        android:padding="@dimen/margin_small"
         />
     <TextView
         android:id="@+id/text_horse_distance"
         android:layout_width="wrap_content"
+        android:textSize="@dimen/font_size_normal"
         android:layout_height="wrap_content"
-        android:hint="アタマ"
         />
 </LinearLayout>

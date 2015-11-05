@@ -87,52 +87,50 @@
                 />
             </LinearLayout>
         </LinearLayout>
+    <!--出馬表とレース結果の切り替えボタン-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/switcher_member_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/race_viewer_member_list"
+            android:gravity="center"
+            android:textColor="@color/base_text"
+            />
+        <TextView
+            android:id="@+id/switcher_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/race_viewer_result_list"
+            android:gravity="center"
+            android:textColor="@color/base_text"
+            />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="horizontal"
         >
-        <LinearLayout
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            >
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/list_race_member"
-                android:scrollbars="none"
-                />
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/list_race_result"
-                android:visibility="gone"
-                android:scrollbars="none"
-                />
-            </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/list_race_member"
+            android:scrollbars="none"
+            />
+        <ListView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:id="@+id/switcher_member_list"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="出"
-                />
-            <TextView
-                android:id="@+id/switcher_result_list"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="結"
-                />
-
-        </LinearLayout>
-        </LinearLayout>
-
+            android:id="@+id/list_race_result"
+            android:visibility="gone"
+            android:scrollbars="none"
+            />
+    </LinearLayout>
 </LinearLayout>

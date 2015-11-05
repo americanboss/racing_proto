@@ -7,9 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.sun.jna.IntegerType;
+
+import net.youbuntan.racing.Manager.BracketColorManager;
 import net.youbuntan.racing.R;
 import net.youbuntan.racing.model.RaceData;
 import net.youbuntan.racing.model.RaceMember;
+import net.youbuntan.racing.util.StringUtils;
 
 /**
  * レース結果のListAdapter
@@ -18,15 +22,18 @@ public class RaceResultListAdapter extends BaseAdapter{
 
     private RaceData mRaceData;
     private LayoutInflater mInflater;
+    private Context mContext;
 
     public RaceResultListAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRaceData = new RaceData();
+        mContext = context;
     }
 
     public RaceResultListAdapter(Context context, RaceData raceData) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRaceData = raceData;
+        mContext = context;
     }
 
     @Override
@@ -65,8 +72,15 @@ public class RaceResultListAdapter extends BaseAdapter{
 
         RaceMember member = mRaceData.getRaceMembers().get(position);
 
-        viewHolder.mResult.setText(member.getResult());
+        viewHolder.mResult.setText(StringUtils.getResultByRaceMember(mContext, member));
+
         viewHolder.mGateNumber.setText(Integer.toString(member.getGateNumber()));
+        // 馬番に枠番を着色する
+        BracketColorManager bracketColorManager = new BracketColorManager();
+        bracketColorManager.setBracketNumber(member.getBracketNumber());
+        viewHolder.mGateNumber.setBackgroundColor(bracketColorManager.getBackgroundColorResourceId(mContext));
+        viewHolder.mGateNumber.setTextColor(bracketColorManager.getTextColorResourceId(mContext));
+
         viewHolder.mHorseName.setText(member.getHorseName());
         viewHolder.mHorseDistance.setText(member.getHorseDistance());
 
