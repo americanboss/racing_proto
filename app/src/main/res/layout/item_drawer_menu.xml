@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+    android:padding="12dp"
+    >
+
+    <ImageView
+        android:id="@+id/eqs_drawer_menu_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/eqs_drawer_menu_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textColor="@color/base_text"
+        android:textSize="@dimen/font_size_large"
+        android:paddingLeft="12dp"
+        android:gravity="center_vertical"
+        />
+
+</LinearLayout>
