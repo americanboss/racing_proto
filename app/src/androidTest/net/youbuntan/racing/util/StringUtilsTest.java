@@ -1,8 +1,6 @@
-package net.youbuntan.racing.util;
+package jp.co.equinestudio.racing.util;
 
 import junit.framework.TestCase;
-
-import net.youbuntan.racing.util.StringUtils;
 
 import java.lang.Exception;
 import java.lang.String;

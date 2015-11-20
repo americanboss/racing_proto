@@ -4,19 +4,19 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <net.youbuntan.racing.view.schedule.ScheduleView
+    <jp.co.equinestudio.racing.view.schedule.ScheduleView
         android:id="@+id/schedule_container_column_a"
         android:orientation="horizontal"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <net.youbuntan.racing.view.schedule.ScheduleView
+    <jp.co.equinestudio.racing.view.schedule.ScheduleView
         android:id="@+id/schedule_container_column_b"
         android:orientation="horizontal"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <net.youbuntan.racing.view.schedule.ScheduleView
+    <jp.co.equinestudio.racing.view.schedule.ScheduleView
         android:id="@+id/schedule_container_column_c"
         android:orientation="horizontal"
         android:layout_weight="1"
