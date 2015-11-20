@@ -2,6 +2,8 @@ package jp.co.equinestudio.racing.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -10,7 +12,9 @@ import lombok.experimental.Accessors;
  *
  */
 @Accessors(prefix = "m") @Getter @Setter
-public class RaceMember {
+public class RaceMember implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @SerializedName("horse_code")
     private String mHorseCode;

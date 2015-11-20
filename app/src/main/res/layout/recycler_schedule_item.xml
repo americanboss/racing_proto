@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- トップページで利用する開催スケジュール -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:id="@+id/view_container"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <!-- 左側表示 競馬場名 -->
+    <TextView
+        android:id="@+id/text_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="新潟"
+        android:textSize="@dimen/font_size_normal"
+        android:layout_gravity="center"
+        />
+    <!-- 日時表示 -->
+    <TextView
+        android:id="@+id/text_month"
+        android:hint="9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_normal"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_month"
+        android:textSize="@dimen/font_size_small"
+        />
+    <TextView
+        android:id="@+id/text_day"
+        android:hint="21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_normal"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_day"
+        android:textSize="@dimen/font_size_small"
+        />
+    <TextView
+        android:id="@+id/text_weekday"
+        android:hint="21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_normal"
+        />
+
+</LinearLayout>

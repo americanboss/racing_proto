@@ -10,7 +10,8 @@
                     "course" : "04",
                     "kaiji" : "04",
                     "nichiji" : "04",
-                    "main_race" : "日本ダービー"
+                    "main_race" : "日本ダービー",
+                    "weekday":"1"
                 },
                 {
                     "code" : "20140920050404",
@@ -19,7 +20,8 @@
                     "course" : "05",
                     "kaiji" : "04",
                     "nichiji" : "04",
-                    "main_race" : "優駿牝馬"
+                    "main_race" : "優駿牝馬",
+                    "weekday":"1"
                 }
             ]
         },
@@ -33,7 +35,8 @@
                     "course" : "04",
                     "kaiji" : "04",
                     "nichiji" : "04",
-                    "main_race" : "皐月賞"
+                    "main_race" : "皐月賞",
+                    "weekday":"2"
                 },
                 {
                     "code" : "20140921050404",
@@ -42,11 +45,66 @@
                     "course" : "05",
                     "kaiji" : "04",
                     "nichiji" : "04",
-                    "main_race" : "有馬記念"
+                    "main_race" : "有馬記念",
+                    "weekday":"2"
                 }
             ]
         }
 
-    ]
+    ],
+    "main_race_list": [
+        {
+            "code": "201009040108",
+            "schedule": "2010090401",
+            "year": "2010",
+            "month_day": "0904",
+            "course": "01",
+            "race_num": "08",
+            "weekday": "1",
+            "race_name_full": null,
+            "race_name_sub": "",
+            "race_name_10": "富良野特別",
+            "race_name_6": null,
+            "race_name_3": null,
+            "grade": "E",
+            "distance": "2600",
+            "track": "芝",
+            "track_course": "A",
+            "entry_num": "14",
+            "weather": "1",
+            "track_condition_turf": "1",
+            "track_condition_dirt": "0",
+            "race_division": "",
+            "start_time": "14:45",
+            "track_master": "芝・右",
+            "kakutei": 1
+        },
+        {
+            "code": "201009040109",
+            "schedule": "2010090401",
+            "year": "2010",
+            "month_day": "0904",
+            "course": "01",
+            "race_num": "09",
+            "weekday": "1",
+            "race_name_full": null,
+            "race_name_sub": "",
+            "race_name_10": "ＨＢＣ賞",
+            "race_name_6": null,
+            "race_name_3": null,
+            "grade": "E",
+            "distance": "1200",
+            "track": "芝",
+            "track_course": "A",
+            "entry_num": "16",
+            "weather": "1",
+            "track_condition_turf": "1",
+            "track_condition_dirt": "0",
+            "race_division": "",
+            "start_time": "15:25",
+            "track_master": "芝・右",
+            "kakutei": 1
+        }
+        ]
 
 }

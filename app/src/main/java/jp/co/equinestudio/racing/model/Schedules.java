@@ -14,6 +14,9 @@ import lombok.experimental.Accessors;
 @Accessors(prefix = "m") @Getter @Setter
 public class Schedules {
 
+    @SerializedName("main_race_list")
+    private ArrayList<Race> mMainRaces;
+
     @SerializedName("date_list")
     private ArrayList<ScheduleDate> mScheduleDates;
 
@@ -48,6 +51,9 @@ public class Schedules {
 
         @SerializedName("main_race")
         private String mMainRace;
+
+        @SerializedName("weekday")
+        private String mWeekday;
 
     }
 

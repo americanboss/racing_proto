@@ -1,0 +1,47 @@
+import de.greenrobot.daogenerator.DaoGenerator;
+import de.greenrobot.daogenerator.Entity;
+import de.greenrobot.daogenerator.Schema;
+
+
+// DBのバージョン
+def dbVersion = 1
+// 出力先のパッケージ名
+def daoOutputPackage = "jp.co.equinestudio.racing.dao.green"
+// 出力先のディレクトリパス（generator実行前にcleanするのでソースは分けたほうがいい）
+def daoOutputDirPath = "app/src-gen/main/java"
+
+// generatorで作成したディレクトリを削除する
+task daoGeneratorClean(type: Delete) {
+    delete "../${daoOutputDirPath}"
+}
+
+task daoGenerator {
+    description 'daoを生成します'
+
+    doLast {
+        Schema schema = new Schema(dbVersion, daoOutputPackage);
+
+        // ------------- この辺でテーブル定義 START -------------------
+
+        Entity companyTable = schema.addEntity("FavoriteHorse");
+        companyTable.addIdProperty().primaryKey();
+        companyTable.addStringProperty("horse_code");
+        companyTable.addStringProperty("horse_name");
+        companyTable.addIntProperty("group");
+        companyTable.addLongProperty("reg_timestamp");
+
+        // ------------- この辺でテーブル定義 END -------------------
+
+        try {
+            // 未作成ならディレクトリを作る
+            File file = new File(daoOutputDirPath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            // Dao生成!
+            new DaoGenerator().generateAll(schema, daoOutputDirPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

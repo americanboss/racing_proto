@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">My Application</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Racing Prototype</string>
     <string name="action_settings">Settings</string>
+    <string name="action_menu">メニュー</string>
     <string name="dialog_cancel">キャンセル</string>
 
     <string name="label_year">年</string>

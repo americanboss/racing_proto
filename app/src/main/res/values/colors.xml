@@ -4,6 +4,7 @@
     <color name="white_text">#FFFFFF</color>
 
     <color name="background_base">#FFFFFF</color>
+    <color name="background_highlight">#44AF35</color>
 
     <color name="schedule_a">#CCFFFF</color>
     <color name="schedule_b">#FFCCFF</color>

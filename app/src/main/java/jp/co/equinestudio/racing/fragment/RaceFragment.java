@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,20 +18,26 @@ import com.google.gson.reflect.TypeToken;
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.adapter.RaceMemberListAdapter;
 import jp.co.equinestudio.racing.adapter.RaceResultListAdapter;
+import jp.co.equinestudio.racing.dao.DbHelper;
+import jp.co.equinestudio.racing.dao.green.DaoSession;
+import jp.co.equinestudio.racing.dao.green.FavoriteHorse;
+import jp.co.equinestudio.racing.dao.green.FavoriteHorseDao;
 import jp.co.equinestudio.racing.fragment.dialog.RaceMemberControlDialog;
 import jp.co.equinestudio.racing.logic.AssetsLogic;
 import jp.co.equinestudio.racing.model.Race;
 import jp.co.equinestudio.racing.model.RaceData;
 import jp.co.equinestudio.racing.model.RaceMember;
+import jp.co.equinestudio.racing.util.FavoriteHorseUtils;
 import jp.co.equinestudio.racing.util.comparator.RaceMemberComparator;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
  */
-public class RaceFragment extends Fragment {
+public class RaceFragment extends Fragment implements RaceMemberControlDialog.OnRaceMemberControl {
 
     private static final String KEY_RACE = "KEY_RACE";
     private static final String KEY_RACE_CODE = "KEY_RACE_CODE";
@@ -39,6 +46,8 @@ public class RaceFragment extends Fragment {
     private Race mRace;
     private ListView mMemberList;
     private ListView mResultList;
+
+    private FavoriteHorseDao mFavoriteHorseDao;
 
     private RaceMemberListAdapter mMemberListAdapter;
     private RaceResultListAdapter mResultListAdapter;
@@ -70,6 +79,11 @@ public class RaceFragment extends Fragment {
         RaceData raceData = gson.fromJson(raceJson, listType);
         RaceData resultData = gson.fromJson(raceJson, listType);
 
+
+        DaoSession session = DbHelper.getInstance(getActivity().getApplicationContext()).session();
+        mFavoriteHorseDao = session.getFavoriteHorseDao();
+        List<FavoriteHorse> favoriteHorseList = mFavoriteHorseDao.loadAll();
+
         Collections.sort(raceData.getRaceMembers(), new RaceMemberComparator(RaceMemberComparator.GATE_NUMBER));
         Collections.sort(resultData.getRaceMembers(), new RaceMemberComparator(RaceMemberComparator.RESULT));
 
@@ -91,6 +105,7 @@ public class RaceFragment extends Fragment {
         mResultList = (ListView) view.findViewById(R.id.list_race_result);
 
         mMemberListAdapter = new RaceMemberListAdapter(getActivity(), raceData);
+        mMemberListAdapter.setFavoriteHorse(favoriteHorseList);
         mResultListAdapter = new RaceResultListAdapter(getActivity(), resultData);
 
         mMemberList.setAdapter(mMemberListAdapter);
@@ -127,10 +142,8 @@ public class RaceFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-            Bundle args = new Bundle();
-            args.putString(RaceMemberControlDialog.KEY_TITLE, ((RaceMember) mMemberListAdapter.getItem(position)).getHorseName());
-            RaceMemberControlDialog dialog = new RaceMemberControlDialog();
-            dialog.setArguments(args);
+            RaceMemberControlDialog dialog = RaceMemberControlDialog.getNewInstance(position, (RaceMember) mMemberListAdapter.getItem(position));
+            dialog.setTargetFragment(RaceFragment.this, 0);
             dialog.show(fragmentManager, "tag");
 
         }
@@ -142,7 +155,6 @@ public class RaceFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
             Bundle args = new Bundle();
-            args.putString(RaceMemberControlDialog.KEY_TITLE, ((RaceMember) mMemberListAdapter.getItem(position)).getHorseName());
             RaceMemberControlDialog dialog = new RaceMemberControlDialog();
             dialog.setArguments(args);
             dialog.show(fragmentManager, "tag");
@@ -151,4 +163,22 @@ public class RaceFragment extends Fragment {
         }
     };
 
+    @Override
+    public void switchFavoriteHorse(final int position) {
+        FavoriteHorseUtils favoriteHorseUtil = new FavoriteHorseUtils(mFavoriteHorseDao);
+        RaceMember raceMember = (RaceMember) mMemberListAdapter.getItem(position);
+
+        if (favoriteHorseUtil.isFavorite(raceMember.getHorseCode())) {
+            if (favoriteHorseUtil.remove(raceMember.getHorseCode())) {
+//                Toast.makeText(getActivity(), "お気に入りから削除しました", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            favoriteHorseUtil.add(raceMember.getHorseCode(), raceMember.getHorseName());
+//            Toast.makeText(getActivity(), "お気に入りに登録しました", Toast.LENGTH_SHORT).show();
+        }
+        List<FavoriteHorse> favoriteHorseList = mFavoriteHorseDao.loadAll();
+        mMemberListAdapter.setFavoriteHorse(favoriteHorseList);
+        mMemberListAdapter.notifyDataSetChanged();
+
+    }
 }

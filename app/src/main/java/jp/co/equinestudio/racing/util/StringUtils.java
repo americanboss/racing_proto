@@ -16,8 +16,6 @@ public class StringUtils {
     public static final int MONTH_DAY_UTIL_MONTH = 0;
     public static final int MONTH_DAY_UTIL_DAY = 1;
 
-
-
     public static String getWeekdayText(final String code) {
         if (code == null) {
             // TODO ここはNPE出す
@@ -29,13 +27,13 @@ public class StringUtils {
 
     public static HashMap<String, String> getWeekdayMap() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("1", "土");
-        map.put("2", "日");
-        map.put("3", "月");
-        map.put("4", "火");
-        map.put("5", "水");
-        map.put("6", "木");
-        map.put("7", "金");
+        map.put("1", "(土)");
+        map.put("2", "(日)");
+        map.put("3", "(月)");
+        map.put("4", "(火)");
+        map.put("5", "(水)");
+        map.put("6", "(木)");
+        map.put("7", "(金)");
         return map;
 
     }
@@ -49,8 +47,15 @@ public class StringUtils {
     public static String[] convertMonthDayText(String monthDay) {
         String[] converted = new String[2];
         converted[MONTH_DAY_UTIL_MONTH] = monthDay.substring(0, 2);
-        converted[MONTH_DAY_UTIL_DAY] = monthDay.substring(2, 2);
+        converted[MONTH_DAY_UTIL_DAY] = monthDay.substring(2, 4);
         return converted;
+    }
+
+    public static String getMonthDayText(final String monthDay){
+        String[] convertedMonthDayText = StringUtils.convertMonthDayText(monthDay);
+        StringBuilder builder = new StringBuilder();
+        builder.append(convertedMonthDayText[MONTH_DAY_UTIL_MONTH]).append("/").append(convertedMonthDayText[MONTH_DAY_UTIL_DAY]);
+        return builder.toString();
     }
 
     public static String getResultByRaceMember(final Context context, final RaceMember raceMember) {

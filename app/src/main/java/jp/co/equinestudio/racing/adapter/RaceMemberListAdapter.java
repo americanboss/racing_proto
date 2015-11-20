@@ -5,11 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import jp.co.equinestudio.racing.Manager.BracketColorManager;
 import jp.co.equinestudio.racing.R;
+import jp.co.equinestudio.racing.dao.green.FavoriteHorse;
 import jp.co.equinestudio.racing.model.RaceData;
 import jp.co.equinestudio.racing.model.RaceMember;
 
@@ -22,17 +28,30 @@ public class RaceMemberListAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private Context mContext;
 
+    private Map<String, Integer> mFavoriteHorseMap;
+
     public RaceMemberListAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRaceData = new RaceData();
         mContext = context;
+        mFavoriteHorseMap = new HashMap();
     }
 
     public RaceMemberListAdapter(Context context, RaceData raceData) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRaceData = raceData;
         mContext = context;
+        mFavoriteHorseMap = new HashMap();
     }
+
+    public void setFavoriteHorse(final List<FavoriteHorse> favoriteHorseList) {
+        mFavoriteHorseMap.clear();;
+        for (FavoriteHorse favoriteHorse : favoriteHorseList) {
+            mFavoriteHorseMap.put(favoriteHorse.getHorse_code(), favoriteHorse.getGroup());
+        }
+    }
+
+
 
     @Override
     public int getCount() {
@@ -74,6 +93,8 @@ public class RaceMemberListAdapter extends BaseAdapter{
             viewHolder.mHorseWeight = (TextView) view.findViewById(R.id.text_horse_weight);
             viewHolder.mHorseWeightDiff = (TextView) view.findViewById(R.id.text_horse_weight_diff);
 
+            viewHolder.mFavoriteStar = (ImageView) view.findViewById(R.id.favorite_star);
+
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -95,6 +116,8 @@ public class RaceMemberListAdapter extends BaseAdapter{
         viewHolder.mHorseColor.setText(member.getHorseColorCode());
         viewHolder.mHorseWeight.setText(member.getHorseWeight());
 
+        viewHolder.mFavoriteStar.setVisibility(mFavoriteHorseMap.containsKey(member.getHorseCode()) ? View.VISIBLE : View.GONE);
+
         // 枠番の色設定
         BracketColorManager budgetColorManager = new BracketColorManager();
         budgetColorManager.setBracketNumber(member.getBracketNumber());
@@ -104,7 +127,6 @@ public class RaceMemberListAdapter extends BaseAdapter{
 
         return view;
     }
-
 
     class ViewHolder {
 
@@ -124,6 +146,8 @@ public class RaceMemberListAdapter extends BaseAdapter{
         private TextView mHorseColor;           // 毛色コード
         private TextView mHorseWeight;          // 馬体重
         private TextView mHorseWeightDiff;      // 馬体重増減
+
+        private ImageView mFavoriteStar;    // お気に入りの★
 
 
     }
