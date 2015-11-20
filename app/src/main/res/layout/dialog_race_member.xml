@@ -4,10 +4,18 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/text_horse_distance"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="アタマ"
-        />
+        android:id="@+id/control_favorite_horse"
+        >
+        <!--ImageView-->
+        <TextView
+            android:text="お気に入りに追加する"
+            android:textColor="@color/base_text"
+            android:textSize="@dimen/font_size_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </LinearLayout>

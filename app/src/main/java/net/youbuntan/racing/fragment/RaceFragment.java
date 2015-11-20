@@ -118,9 +118,24 @@ public class RaceFragment extends Fragment {
         });
 
         mMemberList.setOnItemLongClickListener(mMemberLongClickListener);
+        mMemberList.setOnItemClickListener(mMemberClickListener);
 
         return view;
     }
+
+    private AdapterView.OnItemClickListener mMemberClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            Bundle args = new Bundle();
+            args.putString(RaceMemberControlDialog.KEY_TITLE, ((RaceMember) mMemberListAdapter.getItem(position)).getHorseName());
+            RaceMemberControlDialog dialog = new RaceMemberControlDialog();
+            dialog.setArguments(args);
+            dialog.show(fragmentManager, "tag");
+
+        }
+    };
 
     private AdapterView.OnItemLongClickListener mMemberLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override

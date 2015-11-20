@@ -21,6 +21,9 @@ import net.youbuntan.racing.R;
 import net.youbuntan.racing.adapter.RaceViewerPagerAdapter;
 import net.youbuntan.racing.logic.AssetsLogic;
 import net.youbuntan.racing.model.RaceList;
+import net.youbuntan.racing.util.StringUtils;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 
@@ -35,6 +38,7 @@ public class RaceViewerActivity extends FragmentActivity {
     private ViewGroup mTab;
     private View mIndicator;
     private String mScheduleCode;
+    private TextView mHeading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +54,19 @@ public class RaceViewerActivity extends FragmentActivity {
         mTabScroller = (HorizontalScrollView) findViewById(R.id.tab_scroll);
         mTab = (ViewGroup) findViewById(R.id.tab);
         mIndicator = findViewById(R.id.indicator);
+        mHeading = (TextView) findViewById(R.id.race_viewer_heading);
 
         //レース一覧をロードする
         String raceJson = AssetsLogic.getStringAsset(RaceViewerActivity.this, "race_list/race_list.static."+mScheduleCode+".json");
         Gson gson = new Gson();
         Type listType = new TypeToken<RaceList>() { }. getType();
         RaceList raceList = gson.fromJson(raceJson, listType);
+
+        // TODO 開催をクリックするとリストを表示してジャンプできるようにする
+        StringUtils.getRaceCourseText(raceList.getCourse());
+
+        // TODO スケジュールコードから曜日は割り出せないので、レースリストに入れる
+        StringUtils.getWeekdayText(raceList.getWeekday());
 
         PagerAdapter adapter = new RaceViewerPagerAdapter(getSupportFragmentManager(), raceList);
         final ViewPager pager = (ViewPager) findViewById(R.id.pager);
