@@ -18,9 +18,11 @@ import android.widget.ListView;
 import jp.co.equinestudio.racing.FragmentTransferListener;
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.adapter.DrawerMenuListAdapter;
+import jp.co.equinestudio.racing.fragment.FavoriteHorseFragment;
 import jp.co.equinestudio.racing.fragment.HomeFragment;
 import jp.co.equinestudio.racing.fragment.RaceViewerFragment;
 import jp.co.equinestudio.racing.model.DrawerMenuItem;
+import jp.co.equinestudio.racing.util.DrawerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,11 +92,12 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
         // NB: required for the drawer indicator to show up!
         mDrawer.setDrawerListener(mDrawerToggle);
 
-        mDrawerMenuListAdapter = new DrawerMenuListAdapter(this);
+        mDrawerMenuItems = DrawerUtils.getMenuItemList(getApplicationContext());
+
+        mDrawerMenuListAdapter = new DrawerMenuListAdapter(this, mDrawerMenuItems);
         mDrawerMenuList.setAdapter(mDrawerMenuListAdapter);
         mDrawerMenuList.setOnItemClickListener(mDrawerMenuItemClickListener);
 
-        mDrawerMenuItems = new ArrayList<>();
 
         replaceHomeFragment();
 
@@ -104,9 +107,10 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
         @Override
         public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             switch (mDrawerMenuItems.get(position).getId()) {
-//                case DrawerMenuItem.ID_MAP:
-//                    replaceLocationMapFragment(LocationMapFragment.MOVE_TO_PLACE_NONE);
-//                    break;
+                case DrawerMenuItem.ID_FAVORITE_HORSE:
+
+                    replaceFavoriteHorseFragment();
+                    break;
             }
 
         }
@@ -121,6 +125,11 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
     public void replaceRaceViewerFragment(final String scheduleCode, final int racePosition) {
 
         RaceViewerFragment fragment = RaceViewerFragment.newInstance(scheduleCode, racePosition);
+        replaceFragment(fragment);
+    }
+
+    public void replaceFavoriteHorseFragment() {
+        FavoriteHorseFragment fragment = FavoriteHorseFragment.newInstance();
         replaceFragment(fragment);
     }
 

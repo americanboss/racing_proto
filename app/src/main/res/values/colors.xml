@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="base_text">#111111</color>
-    <color name="white_text">#FFFFFF</color>
+    <color name="text_base">#111111</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_highlight">#44AF35</color>
+
 
     <color name="background_base">#FFFFFF</color>
     <color name="background_highlight">#44AF35</color>
+
+    <color name="divider_base">#888899</color>
 
     <color name="schedule_a">#CCFFFF</color>
     <color name="schedule_b">#FFCCFF</color>

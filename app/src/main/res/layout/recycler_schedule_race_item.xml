@@ -17,11 +17,13 @@
             android:gravity="right"
             android:layout_marginRight="2dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:text="@string/label_r"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:id="@+id/text_start_time"
@@ -29,6 +31,7 @@
             android:layout_marginLeft="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:id="@+id/text_race_name"
@@ -36,6 +39,7 @@
             android:layout_marginLeft="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
     </LinearLayout>
     <LinearLayout
@@ -48,29 +52,34 @@
             android:hint="ダート"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:id="@+id/text_distance"
             android:hint="2400"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:text="@string/label_m"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:id="@+id/text_entry_num"
             android:hint="18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
         <TextView
             android:text="@string/label_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_base"
             />
 
     </LinearLayout>

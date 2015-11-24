@@ -51,6 +51,14 @@ public class RaceMemberListAdapter extends BaseAdapter{
         }
     }
 
+    public boolean isFavoriteHorse(final String horseCode) {
+        return mFavoriteHorseMap.containsKey(horseCode);
+    }
+
+    public boolean isFavoriteHorse(final int position) {
+        return isFavoriteHorse(mRaceData.getRaceMembers().get(position).getHorseCode());
+    }
+
 
 
     @Override
@@ -116,7 +124,7 @@ public class RaceMemberListAdapter extends BaseAdapter{
         viewHolder.mHorseColor.setText(member.getHorseColorCode());
         viewHolder.mHorseWeight.setText(member.getHorseWeight());
 
-        viewHolder.mFavoriteStar.setVisibility(mFavoriteHorseMap.containsKey(member.getHorseCode()) ? View.VISIBLE : View.GONE);
+        viewHolder.mFavoriteStar.setVisibility(isFavoriteHorse(member.getHorseCode()) ? View.VISIBLE : View.GONE);
 
         // 枠番の色設定
         BracketColorManager budgetColorManager = new BracketColorManager();

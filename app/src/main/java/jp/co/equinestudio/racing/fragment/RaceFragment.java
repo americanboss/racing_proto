@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -71,7 +70,7 @@ public class RaceFragment extends Fragment implements RaceMemberControlDialog.On
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_race_viewer, null);
+        View view = inflater.inflate(R.layout.fragment_race, null);
 
         String raceJson = AssetsLogic.getStringAsset(getActivity(), "race/"+mRace.getScheduleCode()+"/race.static." + mRace.getCode() + ".json");
         Gson gson = new Gson();
@@ -142,7 +141,7 @@ public class RaceFragment extends Fragment implements RaceMemberControlDialog.On
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-            RaceMemberControlDialog dialog = RaceMemberControlDialog.getNewInstance(position, (RaceMember) mMemberListAdapter.getItem(position));
+            RaceMemberControlDialog dialog = RaceMemberControlDialog.newInstance(position, (RaceMember) mMemberListAdapter.getItem(position), mMemberListAdapter.isFavoriteHorse(position));
             dialog.setTargetFragment(RaceFragment.this, 0);
             dialog.show(fragmentManager, "tag");
 

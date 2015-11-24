@@ -41,7 +41,7 @@ public class RaceViewerActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_race_viewer);
+        setContentView(R.layout.fragment_race_viewer);
 
         Intent intent = getIntent();
         Bundle args = intent.getExtras();

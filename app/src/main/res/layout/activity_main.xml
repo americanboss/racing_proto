@@ -60,7 +60,7 @@
             <TextView
                 android:text="競馬ぁ～"
                 android:paddingLeft="@dimen/margin_medium"
-                android:textColor="@color/white_text"
+                android:textColor="@color/text_white"
                 android:textSize="@dimen/font_size_large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

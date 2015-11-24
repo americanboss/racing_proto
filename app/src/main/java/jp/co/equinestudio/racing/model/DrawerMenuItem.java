@@ -7,12 +7,9 @@ import android.graphics.Bitmap;
  */
 public class DrawerMenuItem {
 
-    public static final int ID_MAP = 1;
-    public static final int ID_SEARCH = 2;
-    public static final int ID_FAVORITE = 3;
-    public static final int ID_EVENT = 4;
-    public static final int ID_INFORMATION = 5;
-    public static final int ID_ABOUT = 6;
+    public static final int ID_HOME = 1;
+    public static final int ID_RACE_LIST = 2;
+    public static final int ID_FAVORITE_HORSE = 3;
 
 
     private int mId;

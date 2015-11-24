@@ -5,12 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -19,22 +16,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
-import jp.co.equinestudio.racing.FragmentTransferListener;
 import jp.co.equinestudio.racing.R;
-import jp.co.equinestudio.racing.ScheduleRaceListener;
-import jp.co.equinestudio.racing.adapter.HomeRecyclerAdapter;
-import jp.co.equinestudio.racing.adapter.RaceListAdapter;
 import jp.co.equinestudio.racing.adapter.RaceViewerPagerAdapter;
-import jp.co.equinestudio.racing.adapter.item.HomeListItem;
 import jp.co.equinestudio.racing.logic.AssetsLogic;
-import jp.co.equinestudio.racing.model.Race;
 import jp.co.equinestudio.racing.model.RaceList;
-import jp.co.equinestudio.racing.model.Schedules;
 import jp.co.equinestudio.racing.util.StringUtils;
-import jp.co.equinestudio.racing.view.schedule.ScheduleView;
 
 /**
  *
@@ -65,7 +52,7 @@ public class RaceViewerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_race_viewer, null);
+        View view = inflater.inflate(R.layout.fragment_race_viewer, null);
 
         Bundle args = getArguments();
         mScheduleCode = args.getString(KEY_SCHEDULE_CODE);

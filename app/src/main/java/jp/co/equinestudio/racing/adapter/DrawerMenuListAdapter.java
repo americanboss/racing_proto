@@ -24,11 +24,6 @@ public class DrawerMenuListAdapter extends BaseAdapter {
     private List<DrawerMenuItem> mItems;
 
 
-    public DrawerMenuListAdapter(final Context context) {
-        mLayoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        mItems = new ArrayList();
-    }
-
     public DrawerMenuListAdapter(final Context context, final List<DrawerMenuItem> items) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         mItems = items;

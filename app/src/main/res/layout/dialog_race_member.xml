@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:background="@color/background_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_horse_name"
+        android:textColor="@color/text_highlight"
+        android:padding="@dimen/margin_large"
+        android:textSize="@dimen/font_size_large"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/divider_base"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/control_favorite_horse"
+        android:padding="@dimen/margin_medium"
         >
         <!--ImageView-->
         <TextView
-            android:text="お気に入りに追加する"
-            android:textColor="@color/base_text"
-            android:textSize="@dimen/font_size_large"
+            android:id="@+id/control_favorite_horse_text"
+            android:text="@string/favorite_hose_add"
+            android:textColor="@color/text_base"
+            android:textSize="@dimen/font_size_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

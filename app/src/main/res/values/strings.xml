@@ -6,6 +6,10 @@
     <string name="action_menu">メニュー</string>
     <string name="dialog_cancel">キャンセル</string>
 
+    <string name="drawer_menu_home">ホーム</string>
+    <string name="drawer_menu_race_list">レース一覧</string>
+    <string name="drawer_menu_favorite_horse">お気に入り馬一覧</string>
+
     <string name="label_year">年</string>
     <string name="label_month">月</string>
     <string name="label_day">日</string>
@@ -23,5 +27,8 @@
 
     <string name="label_result">着</string>
     <string name="label_result_accident">中止</string>
+
+    <string name="favorite_hose_add">お気に入り馬に追加する</string>
+    <string name="favorite_hose_remove">お気に入りから削除する</string>
 
 </resources>

@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:hint="新潟"
             android:textSize="@dimen/font_size_normal"
+            android:textColor="@color/text_base"
             android:layout_gravity="center"
             />
         </LinearLayout>
@@ -35,12 +36,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_size_normal"
+                android:textColor="@color/text_base"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_month"
                 android:textSize="@dimen/font_size_small"
+                android:textColor="@color/text_base"
                 />
             <TextView
                 android:id="@+id/text_day"
@@ -48,12 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_size_normal"
+                android:textColor="@color/text_base"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_day"
                 android:textSize="@dimen/font_size_small"
+                android:textColor="@color/text_base"
                 />
 
         </LinearLayout>
@@ -69,6 +74,7 @@
                 android:layout_height="match_parent"
                 android:hint="日本ダービー"
                 android:textSize="@dimen/font_size_normal"
+                android:textColor="@color/text_base"
                 />
 
 

@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.model.RaceMember;
@@ -18,20 +20,23 @@ public class RaceMemberControlDialog extends DialogFragment {
 
     public static final String KEY_POSITION = "KEY_POSITION";
     public static final String KEY_RACE_MEMBER = "KEY_RACE_MEMBER";
+    public static final String KEY_FAVORITE_HORSE = "KEY_FAVORITE_HORSE";
 
     private LinearLayout mControlFavoriteHorse;
+
 
     private int mPosition;
     private RaceMember mRaceMember;
 
     private OnRaceMemberControl mOnRaceMemberControl;
 
-    public static RaceMemberControlDialog getNewInstance(final int position, final RaceMember raceMember) {
+    public static RaceMemberControlDialog newInstance(final int position, final RaceMember raceMember, final boolean isFavoriteHorse) {
         RaceMemberControlDialog dialog = new RaceMemberControlDialog();
 
         Bundle args = new Bundle();
         args.putInt(KEY_POSITION, position);
         args.putSerializable(RaceMemberControlDialog.KEY_RACE_MEMBER, raceMember);
+        args.putBoolean(KEY_FAVORITE_HORSE, isFavoriteHorse);
 
         dialog.setArguments(args);
 
@@ -66,7 +71,10 @@ public class RaceMemberControlDialog extends DialogFragment {
         mRaceMember = (RaceMember) args.getSerializable(KEY_RACE_MEMBER);
 
         Dialog dialog  = new Dialog(getActivity());
-        dialog.setTitle(mRaceMember.getHorseName());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ((TextView) view.findViewById(R.id.text_horse_name)).setText(mRaceMember.getHorseName());
+        String controlFavoriteHorse = getResources().getString(args.getBoolean(KEY_FAVORITE_HORSE) ? R.string.favorite_hose_remove : R.string.favorite_hose_add);
+        ((TextView) view.findViewById(R.id.control_favorite_horse_text)).setText(controlFavoriteHorse);
 
         dialog.setContentView(view);
 
