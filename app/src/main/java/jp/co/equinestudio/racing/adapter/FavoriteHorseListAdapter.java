@@ -50,24 +50,10 @@ public class FavoriteHorseListAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
-        View view = mInflater.inflate(R.layout.list_race, null);
-        TextView tvRaceNum = (TextView) view.findViewById(R.id.text_race_num);
-        TextView tvStartTime = (TextView) view.findViewById(R.id.text_start_time);
-        TextView tvRaceName = (TextView) view.findViewById(R.id.text_race_name);
-        TextView tvTrack = (TextView) view.findViewById(R.id.text_track);
-        TextView tvDistance = (TextView) view.findViewById(R.id.text_distance);
-        TextView tvEntryNum = (TextView) view.findViewById(R.id.text_entry_num);
+        View view = mInflater.inflate(R.layout.list_favorite_horse, null);
 
-//        Race race = mRaceList.getRaces().get(position);
-//        tvRaceNum.setText(race.getRaceNum());
-//        tvStartTime.setText(race.getStartTime());
-//        tvTrack.setText(race.getTrack());
-//        tvDistance.setText(race.getDistance());
-//        tvEntryNum.setText(race.getEntryNum());
+        ((TextView) view.findViewById(R.id.text_horse_name)).setText(mItems.get(position).getHorse_name());
 
-        // レース名が空であれば条件を表示
-//        String raceName = ("".equals(race.getRaceName10())) ? race.getRaceDivision() :  race.getRaceName10();
-//        tvRaceName.setText(raceName);
 
         return view;
     }

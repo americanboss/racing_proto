@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -33,13 +34,10 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
     private DrawerLayout mDrawer;
 
     private LinearLayout mLeftDrawer;
-    private LinearLayout mDrawerHeadContainer;
 
     private ListView mDrawerMenuList;
     private DrawerMenuListAdapter mDrawerMenuListAdapter;
     List<DrawerMenuItem> mDrawerMenuItems;
-
-    private String mTitle;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +46,6 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
         mLeftDrawer = (LinearLayout) findViewById(R.id.left_drawer);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerMenuList = (ListView) findViewById(R.id.eqs_drawer_menu_list);
-        mDrawerHeadContainer = (LinearLayout) findViewById(R.id.eqs_drawer_head_container);
-
-        mTitle = getResources().getString(R.string.app_name);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -68,14 +63,12 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
             @Override
             public void onDrawerClosed(View drawerView) {
                 invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-                setTitle(mTitle);
 
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-                setTitle(getResources().getString(R.string.action_menu));
             }
         };
 
@@ -108,8 +101,10 @@ public class MainActivity extends ActionBarActivity implements FragmentTransferL
         public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             switch (mDrawerMenuItems.get(position).getId()) {
                 case DrawerMenuItem.ID_FAVORITE_HORSE:
-
                     replaceFavoriteHorseFragment();
+                    break;
+                case DrawerMenuItem.ID_HOME:
+                    replaceHomeFragment();
                     break;
             }
 

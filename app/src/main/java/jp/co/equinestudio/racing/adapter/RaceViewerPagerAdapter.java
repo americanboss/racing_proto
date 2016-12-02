@@ -22,7 +22,7 @@ public class RaceViewerPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        RaceFragment fragment = RaceFragment.load(mRaceList.getRaces().get(position));
+        RaceFragment fragment = RaceFragment.newInstance(mRaceList.getRaces().get(position));
 
         return fragment;
     }

@@ -29,7 +29,7 @@
             android:id="@+id/control_favorite_horse_text"
             android:text="@string/favorite_hose_add"
             android:textColor="@color/text_base"
-            android:textSize="@dimen/font_size_normal"
+            android:textSize="@dimen/font_size_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

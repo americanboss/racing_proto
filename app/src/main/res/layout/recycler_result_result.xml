@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/text_result"
+        android:layout_width="34dp"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/font_size_medium"
+        android:gravity="right"
+        android:textColor="@color/text_base"
+        />
+    <TextView
+        android:id="@+id/text_gate_number"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_medium"
+        android:textColor="@color/text_base"
+        />
+    <TextView
+        android:id="@+id/text_horse_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="@dimen/font_size_medium"
+        android:padding="@dimen/margin_small"
+        android:textColor="@color/text_base"
+        />
+    <TextView
+        android:id="@+id/text_horse_distance"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/font_size_medium"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_base"
+        />
+</LinearLayout>

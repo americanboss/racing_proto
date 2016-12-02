@@ -1,6 +1,7 @@
 package jp.co.equinestudio.racing.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,12 @@ public class RaceMemberListAdapter extends BaseAdapter{
         mFavoriteHorseMap = new HashMap();
     }
 
-    public RaceMemberListAdapter(Context context, RaceData raceData) {
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public void setRaceData(RaceData raceData) {
         mRaceData = raceData;
-        mContext = context;
-        mFavoriteHorseMap = new HashMap();
+    }
+
+    public void clearRaceData() {
+        mRaceData = new RaceData();
     }
 
     public void setFavoriteHorse(final List<FavoriteHorse> favoriteHorseList) {
@@ -64,7 +66,11 @@ public class RaceMemberListAdapter extends BaseAdapter{
     @Override
     public int getCount() {
 
-        return mRaceData.getRaceMembers().size();
+        if (mRaceData.getRaceMembers() != null) {
+            return mRaceData.getRaceMembers().size();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -119,10 +125,14 @@ public class RaceMemberListAdapter extends BaseAdapter{
         viewHolder.mGender.setText(member.getGender());
         viewHolder.mAge.setText(Integer.toString(member.getAge()));
         viewHolder.mJockeyName.setText(member.getJockeyName());
-        viewHolder.mJockeyMark.setText(member.getJockeyMark());
+        if ("".equals(member.getJockeyMark())) {
+            viewHolder.mJockeyMark.setText("　");
+        } else {
+        }
         viewHolder.mTrainerName.setText(member.getTrainerName());
         viewHolder.mHorseColor.setText(member.getHorseColorCode());
         viewHolder.mHorseWeight.setText(member.getHorseWeight());
+        viewHolder.mHorseWeightDiff.setText(member.getHorseWeightDiff());
 
         viewHolder.mFavoriteStar.setVisibility(isFavoriteHorse(member.getHorseCode()) ? View.VISIBLE : View.GONE);
 

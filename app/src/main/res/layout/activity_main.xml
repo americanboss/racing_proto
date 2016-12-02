@@ -36,36 +36,6 @@
         android:layout_gravity="left"
         android:orientation="vertical"
         >
-        <LinearLayout
-            android:id="@+id/eqs_drawer_head_container"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:paddingLeft="@dimen/margin_medium"
-            android:background="@drawable/drawer_background"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            >
-            <FrameLayout
-                android:background="@drawable/icon_background_white"
-                android:padding="@dimen/margin_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/eqs_drawer_launcher_icon"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </FrameLayout>
-
-            <TextView
-                android:text="競馬ぁ～"
-                android:paddingLeft="@dimen/margin_medium"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/font_size_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
         <ListView
             android:id="@+id/eqs_drawer_menu_list"
             android:layout_width="match_parent"

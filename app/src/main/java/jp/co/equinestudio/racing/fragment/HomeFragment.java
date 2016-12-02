@@ -17,13 +17,11 @@ import jp.co.equinestudio.racing.FragmentTransferListener;
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.ScheduleRaceListener;
 import jp.co.equinestudio.racing.adapter.HomeRecyclerAdapter;
-import jp.co.equinestudio.racing.adapter.RaceListAdapter;
 import jp.co.equinestudio.racing.adapter.item.HomeListItem;
 import jp.co.equinestudio.racing.logic.AssetsLogic;
 import jp.co.equinestudio.racing.model.Race;
 import jp.co.equinestudio.racing.model.RaceList;
 import jp.co.equinestudio.racing.model.Schedules;
-import jp.co.equinestudio.racing.view.schedule.ScheduleView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,12 +62,14 @@ public class HomeFragment extends Fragment implements ScheduleRaceListener {
         Schedules schedules = gson.fromJson(scheduleJson, listType);
 
         // メインレースのリストをロードする
-//        for (Race race : schedules.getMainRaces()) {
-//            HomeListItem item = new HomeListItem();
-//            item.setTypeId(HomeListItem.TYPE_ID_MAIN_RACE);
-//            item.setRace(race);
-//            listItems.add(item);
-//        }
+        List<HomeListItem> mainRaceItems = new ArrayList<>();
+        for (Race race : schedules.getMainRaces()) {
+            HomeListItem item = new HomeListItem();
+            item.setTypeId(HomeListItem.TYPE_ID_MAIN_RACE);
+            item.setRace(race);
+            mainRaceItems.add(item);
+        }
+        mHomeRecyclerAdapter.setMainRaceItems(mainRaceItems);
 
         // 開催日付ごとに処理
         List<HomeListItem> scheduleListItems = new ArrayList<>();
@@ -101,24 +101,6 @@ public class HomeFragment extends Fragment implements ScheduleRaceListener {
 
         return view;
     }
-    /**
-     * 開催予定がクリックされた際のコールバックを受け取り、レース一覧のポップアップを表示する
-     */
-    private ScheduleView.OnScheduleSelectedListener mScheduleListener = new ScheduleView.OnScheduleSelectedListener() {
-        @Override
-        public void onScheduleSelect(final String scheduleCode) {
-            // レース一覧を作成する
-
-            //レース一覧をロードする
-            String raceJson = AssetsLogic.getStringAsset(getActivity(), "race_list/race_list.static." +scheduleCode+".json");
-            Gson gson = new Gson();
-            Type listType = new TypeToken<RaceList>() { }. getType();
-            RaceList raceList = gson.fromJson(raceJson, listType);
-            RaceListAdapter adapter = new RaceListAdapter(getActivity(), raceList);
-
-        }
-    };
-
     /**
      * 開催予定内のレースがクリックされた際のコールバックを受け取り、レースビューア画面に遷移する
      */

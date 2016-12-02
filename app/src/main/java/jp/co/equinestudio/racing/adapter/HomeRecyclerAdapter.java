@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,6 +61,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         mScheduleItems = items;
     }
 
+    public void setMainRaceItems(final List<HomeListItem> items) {
+        mMainRaceItems = items;
+    }
+
     public void putScheduleRaceItem(final String scheduleCode, final Race race) {
         HomeListItem item = new HomeListItem();
         item.setTypeId(HomeListItem.TYPE_ID_SCHEDULE_RACE);
@@ -81,11 +84,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             case HomeListItem.TYPE_ID_HEADING :
                 break;
             case HomeListItem.TYPE_ID_MAIN_RACE :
-                return new MainRaceViewHolder(mInflater.inflate(R.layout.recycler_main_race_item, parent, false));
+                return new MainRaceViewHolder(mInflater.inflate(R.layout.recycler_home_main_race_item, parent, false));
             case HomeListItem.TYPE_ID_SCHEDULE :
-                return new ScheduleViewHolder(mInflater.inflate(R.layout.recycler_schedule_item, parent, false));
+                return new ScheduleViewHolder(mInflater.inflate(R.layout.recycler_home_schedule_item, parent, false));
             case HomeListItem.TYPE_ID_SCHEDULE_RACE :
-                return new ScheduleRaceViewHolder(mInflater.inflate(R.layout.recycler_schedule_race_item, parent, false));
+                return new ScheduleRaceViewHolder(mInflater.inflate(R.layout.recycler_home_schedule_race_item, parent, false));
             default:
                 return null;
         }

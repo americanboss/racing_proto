@@ -9,13 +9,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        <TextView
+        <Spinner
+            android:id="@+id/race_viewer_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/race_viewer_heading"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            />
+            android:layout_height="wrap_content" />
 
         <!-- Tab部分 -->
         <include layout="@layout/tab_race_viewer" />

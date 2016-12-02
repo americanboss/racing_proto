@@ -111,6 +111,19 @@
             android:layout_weight="1"
             android:text="@string/race_viewer_member_list"
             android:gravity="center"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@color/background_member_list"
+            android:textColor="@color/text_base"
+            />
+        <TextView
+            android:id="@+id/switcher_odds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/race_viewer_odds"
+            android:gravity="center"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@color/background_odds"
             android:textColor="@color/text_base"
             />
         <TextView
@@ -120,6 +133,8 @@
             android:layout_weight="1"
             android:text="@string/race_viewer_result_list"
             android:gravity="center"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@color/background_result_list"
             android:textColor="@color/text_base"
             />
 
@@ -129,23 +144,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        >
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/list_race_member"
-            android:scrollbars="none"
-            android:divider="@color/divider_base"
-            android:dividerHeight="1dp"
-            />
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/list_race_result"
-            android:visibility="gone"
-            android:scrollbars="none"
-            android:divider="@color/divider_base"
-            android:dividerHeight="1dp"
-            />
-    </LinearLayout>
+        android:id="@+id/race_content"
+        />
 </LinearLayout>

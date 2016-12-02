@@ -2,11 +2,23 @@
 <resources>
     <color name="text_base">#111111</color>
     <color name="text_white">#FFFFFF</color>
-    <color name="text_highlight">#44AF35</color>
+    <color name="text_highlight">#1B5E20</color>
 
 
     <color name="background_base">#FFFFFF</color>
-    <color name="background_highlight">#44AF35</color>
+    <color name="background_highlight">#66BB6A</color>
+    <color name="background_heading">#2E7D32</color>
+
+    <color name="background_heading_orange">#F57C00</color>
+    <color name="background_heading_blue">#4FC3F7</color>
+
+    <color name="background_member_list">#A5D6A7</color>
+    <color name="background_odds">#90CAF9</color>
+    <color name="background_result_list">#ef9a9a</color>
+
+
+
+
 
     <color name="divider_base">#888899</color>
 

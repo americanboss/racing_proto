@@ -23,12 +23,32 @@
     <string name="label_mothers_father">母父</string>
 
     <string name="race_viewer_member_list">出馬表</string>
+    <string name="race_viewer_odds">オッズ</string>
     <string name="race_viewer_result_list">結果</string>
 
     <string name="label_result">着</string>
     <string name="label_result_accident">中止</string>
 
+    <string name="label_pay">円</string>
+
     <string name="favorite_hose_add">お気に入り馬に追加する</string>
     <string name="favorite_hose_remove">お気に入りから削除する</string>
+
+    <string name="odds_order_odds">人気順</string>
+    <string name="odds_order_gate_number">馬番順</string>
+    <string name="odds_order_bracket_number">枠番順</string>
+    <string name="odds_order_box">ボックス</string>
+    <string name="odds_order_nagashi">流し</string>
+    <string name="odds_order_formation">フォメ</string>
+
+    <string-array name="odds_title">
+        <item>単勝・複勝</item>
+        <item>枠連</item>
+        <item>馬連</item>
+        <item>ワイド</item>
+        <item>馬単</item>
+        <item>三連複</item>
+        <item>三連単</item>
+        </string-array>
 
 </resources>

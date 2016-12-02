@@ -166,7 +166,6 @@
                 android:id="@+id/text_jockey_mark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="▲"
                 android:textColor="@color/text_base"
                 />
             </LinearLayout>
@@ -192,7 +191,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="624kg"
             android:textColor="@color/text_base"
             />
         <TextView
@@ -200,7 +198,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="(+24)"
             android:textColor="@color/text_base"
             />
         </LinearLayout>

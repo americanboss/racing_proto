@@ -79,6 +79,9 @@ public class RaceMember implements Serializable {
     @SerializedName("horse_weight")
     private String mHorseWeight;
 
+    @SerializedName("horse_weight_diff")
+    private String mHorseWeightDiff;
+
     @SerializedName("horse_distance")
     private String mHorseDistance;
 
