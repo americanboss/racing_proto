@@ -45,8 +45,6 @@ public class FavoriteHorseFragment extends BaseFragment {
         mFavoriteHorseList = (ListView) view.findViewById(R.id.list_view);
         mAdapter = new FavoriteHorseListAdapter(getContext());
 
-        Bundle args = getArguments();
-
         DaoSession session = DbHelper.getInstance(getActivity().getApplicationContext()).session();
         mFavoriteHorseDao = session.getFavoriteHorseDao();
         List<FavoriteHorse> favoriteHorseList = mFavoriteHorseDao.loadAll();

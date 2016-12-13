@@ -27,6 +27,7 @@ import jp.co.equinestudio.racing.dao.green.DaoSession;
 import jp.co.equinestudio.racing.dao.green.FavoriteHorse;
 import jp.co.equinestudio.racing.dao.green.FavoriteHorseDao;
 import jp.co.equinestudio.racing.fragment.BaseFragment;
+import jp.co.equinestudio.racing.fragment.RaceBaseFragment;
 import jp.co.equinestudio.racing.fragment.dialog.RaceMemberControlDialog;
 import jp.co.equinestudio.racing.logic.AssetsLogic;
 import jp.co.equinestudio.racing.model.Race;
@@ -38,31 +39,20 @@ import jp.co.equinestudio.racing.util.comparator.RaceMemberComparator;
 /**
  *
  */
-public class RaceResultFragment extends BaseFragment {
-
-    private static final String KEY_RACE = "KEY_RACE";
-
-    private Race mRace;
-    private RaceData mRaceData;
+public class RaceResultFragment extends RaceBaseFragment {
 
     private RecyclerView mResultList;
     private RaceResultListAdapter mResultListAdapter;
     private FavoriteHorseDao mFavoriteHorseDao;
 
-    public static RaceResultFragment newInstance(Race race) {
+    public static RaceResultFragment newInstance() {
         RaceResultFragment fragment = new RaceResultFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_RACE, race);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-
-        mRace = (Race) args.getSerializable(KEY_RACE);
 
     }
 
@@ -70,12 +60,6 @@ public class RaceResultFragment extends BaseFragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_race_result, null);
         mResultList = (RecyclerView) view.findViewById(R.id.list_view);
-
-        String raceJson = AssetsLogic.getStringAsset(getActivity(), "race/" + mRace.getScheduleCode() + "/race.static." + mRace.getCode() + ".json");
-        Gson gson = new Gson();
-        Type listType = new TypeToken<RaceData>() { }. getType();
-        mRaceData = gson.fromJson(raceJson, listType);
-        Collections.sort(mRaceData.getRaceMembers(), new RaceMemberComparator(RaceMemberComparator.RESULT));
 
         mResultListAdapter = new RaceResultListAdapter(getContext());
         mResultListAdapter.setRaceData(mRaceData);

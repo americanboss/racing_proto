@@ -4,7 +4,7 @@
               android:orientation="horizontal"
               android:id="@+id/view_container"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:background="@color/background_heading"
     >
     <!-- 日時表示 -->
@@ -40,7 +40,7 @@
         />
     <TextView
         android:id="@+id/text_weekday"
-        android:hint="21"
+        android:hint="（土）"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_size_large"

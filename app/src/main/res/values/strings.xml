@@ -39,7 +39,12 @@
     <string name="odds_order_bracket_number">枠番順</string>
     <string name="odds_order_box">ボックス</string>
     <string name="odds_order_nagashi">流し</string>
+    <string name="odds_order_nagashi_j1">軸1頭流し</string>
+    <string name="odds_order_nagashi_j2">軸2頭流し</string>
     <string name="odds_order_formation">フォメ</string>
+    <string name="odds_show">オッズ表示</string>
+    <string name="odds_hide">馬番表示に戻る</string>
+    <string name="odds_add">購入予定リストに追加</string>
 
     <string-array name="odds_title">
         <item>単勝・複勝</item>
@@ -49,6 +54,23 @@
         <item>馬単</item>
         <item>三連複</item>
         <item>三連単</item>
-        </string-array>
+    </string-array>
+
+    <string-array name="nagashi_list">
+        <item>1着 流し</item>
+        <item>2着 流し</item>
+    </string-array>
+
+    <string-array name="nagashi_j1_list">
+        <item>1着 流し</item>
+        <item>2着 流し</item>
+        <item>3着 流し</item>
+    </string-array>
+
+    <string-array name="nagashi_j2_list">
+        <item>1,2着 流し</item>
+        <item>1,3着 流し</item>
+        <item>2,3着 流し</item>
+    </string-array>
 
 </resources>

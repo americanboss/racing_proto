@@ -8,30 +8,67 @@
         android:id="@+id/heading_additional"
         android:textColor="@color/text_white"
         android:background="@color/background_heading"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/target_number"
         android:textColor="@color/text_white"
-        android:background="@color/background_heading"
-        android:layout_width="20dp"
+        android:background="@color/background_highlight"
+        android:gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
     <TextView
         android:id="@+id/text_horse_name"
         android:layout_weight="1"
+        android:textColor="@color/text_base"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/odds"
-        android:layout_width="wrap_content"
+        android:textColor="@color/text_base"
+        android:gravity="right"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/odds_additional"
-        android:layout_width="wrap_content"
+        android:textColor="@color/text_base"
+        android:gravity="right"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/background_base_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/choice_single1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/choice_single2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/choice_multiple1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/choice_multiple2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/choice_multiple3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </LinearLayout>

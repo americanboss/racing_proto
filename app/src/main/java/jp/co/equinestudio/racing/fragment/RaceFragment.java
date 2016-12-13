@@ -5,27 +5,37 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.Collections;
+
 import jp.co.equinestudio.racing.R;
+import jp.co.equinestudio.racing.RaceViewer;
 import jp.co.equinestudio.racing.adapter.OddsTitleListAdapter;
 import jp.co.equinestudio.racing.fragment.race.RaceMemberFragment;
 import jp.co.equinestudio.racing.fragment.race.RaceOddsFragment;
 import jp.co.equinestudio.racing.fragment.race.RaceOddsListFragment;
 import jp.co.equinestudio.racing.fragment.race.RaceResultFragment;
+import jp.co.equinestudio.racing.logic.AssetsLogic;
 import jp.co.equinestudio.racing.model.Race;
+import jp.co.equinestudio.racing.model.RaceData;
+import jp.co.equinestudio.racing.model.RaceMember;
+import jp.co.equinestudio.racing.util.comparator.RaceMemberComparator;
 
 /**
  *
  */
-public class RaceFragment extends BaseFragment implements OddsTitleListAdapter.OnOddsListOpen {
+public class RaceFragment extends RaceBaseFragment implements OddsTitleListAdapter.OnOddsListOpen {
 
     private static final String KEY_RACE = "KEY_RACE";
-
-    private Race mRace;
 
     public static RaceFragment newInstance(Race race) {
         RaceFragment fragment = new RaceFragment();
@@ -41,6 +51,14 @@ public class RaceFragment extends BaseFragment implements OddsTitleListAdapter.O
         Bundle args = getArguments();
 
         mRace = (Race) args.getSerializable(KEY_RACE);
+
+        String raceJson = AssetsLogic.getStringAsset(getActivity(), "race/" + mRace.getScheduleCode() + "/race.static." + mRace.getCode() + ".json");
+        Log.d("RaceMemberFragment", "race:" + mRace.getCode());
+        Gson gson = new Gson();
+        Type listType = new TypeToken<RaceData>() { }. getType();
+        mRaceData = gson.fromJson(raceJson, listType);
+        Collections.sort(mRaceData.getRaceMembers(), new RaceMemberComparator(RaceMemberComparator.GATE_NUMBER));
+
 
     }
 
@@ -102,23 +120,23 @@ public class RaceFragment extends BaseFragment implements OddsTitleListAdapter.O
     }
 
     private void replaceRaceMemberFragment() {
-        RaceMemberFragment fragment = RaceMemberFragment.newInstance(mRace);
+        RaceMemberFragment fragment = RaceMemberFragment.newInstance();
         replaceFragment(fragment);
     }
 
     private void replaceOddsFragment() {
-        RaceOddsFragment fragment = RaceOddsFragment.newInstance(mRace);
+        RaceOddsFragment fragment = RaceOddsFragment.newInstance();
         replaceFragment(fragment);
     }
 
     private void replaceResultFragment() {
-        RaceResultFragment fragment = RaceResultFragment.newInstance(mRace);
+        RaceResultFragment fragment = RaceResultFragment.newInstance();
         replaceFragment(fragment);
     }
 
     @Override
     public void onOddsListOpen(final int position, final int orderBy) {
-        RaceOddsListFragment fragment = RaceOddsListFragment.newInstance(mRace, position, orderBy);
+        RaceOddsListFragment fragment = RaceOddsListFragment.newInstance(position, orderBy);
         replaceFragment(fragment);
     }
 }

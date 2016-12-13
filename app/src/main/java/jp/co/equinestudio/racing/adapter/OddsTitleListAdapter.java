@@ -8,11 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Map;
-
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.fragment.race.RaceOddsFragment;
 import jp.co.equinestudio.racing.model.Odds;
+import jp.co.equinestudio.racing.util.OddsUtils;
 
 /**
  *
@@ -38,13 +37,13 @@ public class OddsTitleListAdapter extends BaseAdapter{
     public void setOdds(final Odds odds) {
         mOdds = odds;
         mItemEnable = new boolean[ITEM_COUNT];
-        mItemEnable[0] = mOdds.getWinShowOddsMap() != null;
-        mItemEnable[1] = mOdds.getBracketMap() != null;
-        mItemEnable[2] = mOdds.getQuinellaMap() != null;
-        mItemEnable[3] = mOdds.getWideMap() != null;
-        mItemEnable[4] = mOdds.getExactaMap() != null;
-        mItemEnable[5] = mOdds.getTrioMap() != null;
-        mItemEnable[6] = mOdds.getTrifectaMap() != null;
+        mItemEnable[OddsUtils.Table.WIN] = mOdds.getWinShowOddsMap() != null;
+        mItemEnable[OddsUtils.Table.BRACKET] = mOdds.getBracketMap() != null;
+        mItemEnable[OddsUtils.Table.QUINELLA] = mOdds.getQuinellaMap() != null;
+        mItemEnable[OddsUtils.Table.WIDE] = mOdds.getWideMap() != null;
+        mItemEnable[OddsUtils.Table.EXACTA] = mOdds.getExactaMap() != null;
+        mItemEnable[OddsUtils.Table.TRIO] = mOdds.getTrioMap() != null;
+        mItemEnable[OddsUtils.Table.TRIFECTA] = mOdds.getTrifectaMap() != null;
     }
 
     @Override
@@ -72,34 +71,43 @@ public class OddsTitleListAdapter extends BaseAdapter{
         Button buttonBracket = (Button) view.findViewById(R.id.button_odds_order_bracket_number);
         Button buttonGate = (Button) view.findViewById(R.id.button_odds_order_gate_number);
         Button buttonNagashi = (Button) view.findViewById(R.id.button_odds_order_nagashi);
+        Button buttonNagashiJ1 = (Button) view.findViewById(R.id.button_odds_order_nagashi_j1);
+        Button buttonNagashiJ2 = (Button) view.findViewById(R.id.button_odds_order_nagashi_j2);
         Button buttonBox = (Button) view.findViewById(R.id.button_odds_order_box);
         Button buttonFormation = (Button) view.findViewById(R.id.button_odds_order_formation);
 
+        buttonNagashiJ1.setVisibility(View.GONE);
+        buttonNagashiJ2.setVisibility(View.GONE);
         switch (position) {
-            case 0:
+            case OddsUtils.Table.WIN:
                 buttonBracket.setVisibility(View.GONE);
                 buttonNagashi.setVisibility(View.GONE);
                 buttonBox.setVisibility(View.GONE);
                 buttonFormation.setVisibility(View.GONE);
                 break;
-            case 1:
+            case OddsUtils.Table.BRACKET:
                 buttonGate.setVisibility(View.GONE);
                 break;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
+            case OddsUtils.Table.QUINELLA:
+            case OddsUtils.Table.WIDE:
+            case OddsUtils.Table.EXACTA:
+            case OddsUtils.Table.TRIO:
+            case OddsUtils.Table.TRIFECTA:
                 buttonBracket.setVisibility(View.GONE);
                 buttonGate.setVisibility(View.GONE);
                 break;
+        }
+        if (position == OddsUtils.Table.TRIO || position == OddsUtils.Table.TRIFECTA) {
+            buttonNagashiJ1.setVisibility(View.VISIBLE);
+            buttonNagashiJ2.setVisibility(View.VISIBLE);
+            buttonNagashi.setVisibility(View.GONE);
         }
 
         buttonOdds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if (mOnOddsListOpen != null) {
-                    mOnOddsListOpen.onOddsListOpen(position, RaceOddsFragment.ORDER_BY_ODDS);
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.ORDER_BY_ODDS);
                 }
             }
         });
@@ -107,7 +115,7 @@ public class OddsTitleListAdapter extends BaseAdapter{
             @Override
             public void onClick(final View v) {
                 if (mOnOddsListOpen != null) {
-                    mOnOddsListOpen.onOddsListOpen(position, RaceOddsFragment.ORDER_BY_BRACKET);
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.ORDER_BY_BRACKET);
                 }
             }
         });
@@ -115,7 +123,47 @@ public class OddsTitleListAdapter extends BaseAdapter{
             @Override
             public void onClick(final View v) {
                 if (mOnOddsListOpen != null) {
-                    mOnOddsListOpen.onOddsListOpen(position, RaceOddsFragment.ORDER_BY_GATE);
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.ORDER_BY_GATE);
+                }
+            }
+        });
+        buttonNagashi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnOddsListOpen != null) {
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.PATTERN_NAGASHI);
+                }
+            }
+        });
+        buttonBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnOddsListOpen != null) {
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.PATTERN_BOX);
+                }
+            }
+        });
+        buttonFormation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnOddsListOpen != null) {
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.PATTERN_FORMATION);
+                }
+            }
+        });
+        buttonNagashiJ1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnOddsListOpen != null) {
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.PATTERN_NAGASHI_J1);
+                }
+            }
+        });
+        buttonNagashiJ2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnOddsListOpen != null) {
+                    mOnOddsListOpen.onOddsListOpen(position, OddsUtils.Table.PATTERN_NAGASHI_J2);
                 }
             }
         });

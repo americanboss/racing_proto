@@ -1,5 +1,6 @@
 package jp.co.equinestudio.racing.fragment.race;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import java.lang.reflect.Type;
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.adapter.OddsTitleListAdapter;
 import jp.co.equinestudio.racing.fragment.BaseFragment;
+import jp.co.equinestudio.racing.fragment.RaceBaseFragment;
+import jp.co.equinestudio.racing.fragment.RaceFragment;
 import jp.co.equinestudio.racing.logic.AssetsLogic;
 import jp.co.equinestudio.racing.model.Odds;
 import jp.co.equinestudio.racing.model.Race;
@@ -23,35 +26,21 @@ import jp.co.equinestudio.racing.model.RaceData;
 /**
  *
  */
-public class RaceOddsFragment extends BaseFragment implements OddsTitleListAdapter.OnOddsListOpen {
+public class RaceOddsFragment extends RaceBaseFragment implements OddsTitleListAdapter.OnOddsListOpen {
 
-    private static final String KEY_RACE = "KEY_RACE";
-
-    public static final int ORDER_BY_ODDS = 0;
-    public static final int ORDER_BY_BRACKET = 1;
-    public static final int ORDER_BY_GATE = 2;
-
-    private Race mRace;
-    private RaceData mRaceData;
     private Odds mOdds;
 
     private ListView mListView;
     private OddsTitleListAdapter mAdapter;
 
-    public static RaceOddsFragment newInstance(Race race) {
+    public static RaceOddsFragment newInstance() {
         RaceOddsFragment fragment = new RaceOddsFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_RACE, race);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-
-        mRace = (Race) args.getSerializable(KEY_RACE);
 
     }
 

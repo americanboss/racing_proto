@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jp.co.equinestudio.racing.Manager.BracketColorManager;
@@ -16,6 +17,7 @@ import jp.co.equinestudio.racing.adapter.item.RaceResultItem;
 import jp.co.equinestudio.racing.model.RaceData;
 import jp.co.equinestudio.racing.model.RaceMember;
 import jp.co.equinestudio.racing.model.RacePay;
+import jp.co.equinestudio.racing.util.comparator.RaceMemberComparator;
 
 /**
  * レース結果のListAdapter
@@ -43,7 +45,15 @@ public class RaceResultListAdapter extends  RecyclerView.Adapter {
         resultHeadingItem.setHeading("着順");
         mItems.add(resultHeadingItem);
 
+        // 着順の並べ替え
+        List<RaceMember> resultList = new ArrayList<>();
         for (RaceMember raceMember : raceData.getRaceMembers()) {
+            resultList.add(raceMember);
+        }
+
+        Collections.sort(resultList, new RaceMemberComparator(RaceMemberComparator.RESULT));
+
+        for (RaceMember raceMember : resultList) {
             RaceResultItem item = new RaceResultItem();
             item.setTypeId(RaceResultItem.TYPE_ID_RESULT);
             item.setResult(raceMember);

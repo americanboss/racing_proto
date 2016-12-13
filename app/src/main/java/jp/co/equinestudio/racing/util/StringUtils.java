@@ -1,6 +1,7 @@
 package jp.co.equinestudio.racing.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import jp.co.equinestudio.racing.R;
 import jp.co.equinestudio.racing.constants.RacingConstants;
@@ -55,6 +56,20 @@ public class StringUtils {
         String[] convertedMonthDayText = StringUtils.convertMonthDayText(monthDay);
         StringBuilder builder = new StringBuilder();
         builder.append(convertedMonthDayText[MONTH_DAY_UTIL_MONTH]).append("/").append(convertedMonthDayText[MONTH_DAY_UTIL_DAY]);
+        return builder.toString();
+    }
+
+    public static String getChunkNumbers(final String arg, final int limit) {
+        StringBuilder builder = new StringBuilder();
+        boolean append = false;
+        for (int pos = 0; pos < arg.length();pos += limit) {
+            if (append) {
+                builder.append("-");
+            } else {
+                append = true;
+            }
+            builder.append(arg.substring(pos, pos + limit));
+        }
         return builder.toString();
     }
 

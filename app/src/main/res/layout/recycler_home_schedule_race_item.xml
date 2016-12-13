@@ -6,7 +6,7 @@
               android:paddingTop="@dimen/margin_small"
               android:paddingBottom="@dimen/margin_small"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="horizontal"
         android:background="@drawable/circle_main"

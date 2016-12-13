@@ -6,6 +6,7 @@
 
 
     <color name="background_base">#FFFFFF</color>
+    <color name="background_base_dark">#EEEEEE</color>
     <color name="background_highlight">#66BB6A</color>
     <color name="background_heading">#2E7D32</color>
 
